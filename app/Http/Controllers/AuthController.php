@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -149,8 +150,12 @@ class AuthController extends Controller
             $validator = Validator::make(
                 $request->all(),
                 [
-                    'name' => ['required', 'string', 'min:2', 'max:12'],
-                    'email' => ['required', 'string'],
+                    'name' => ['required', 'string', 'max:255'],
+                    'surname' => ['required', 'string', 'max:255'],
+                    'phone_number' => ['required', 'string','min:9','max:12'],
+                    'password' => ['required','string','min:6','max:18'],
+                    'payment_type' =>['required','string'],
+                    'address'=> ['required', 'string', 'max:255']
                 ]
             );
 
@@ -180,13 +185,29 @@ class AuthController extends Controller
             }
 
             $name = $request->input('name');
-            $email = $request->input('email');
+            $surname = $request->input('surname');
+            $phone_number = $request->input('phone_number');
+            $password = $request->input('password');
+            $paymet_type=$request->input('payment_type');
+            $address = $request->input('address');
 
             if (isset($name)) {
                 $user->name = $name;
             }
-            if (isset($email)) {
-                $user->email = $email;
+            if (isset($surname)) {
+                $user->surname = $surname;
+            }
+            if (isset($phone_number)) {
+                $user->phone_number = $phone_number;
+            }
+            if (isset($password)) {
+                $user->password = Hash::make($password);
+            }
+            if (isset($paymet_type)) {
+                $user->payment_type = $paymet_type;
+            }
+            if (isset($address)) {
+                $user->address = $address;
             }
 
             $user->save();
@@ -194,7 +215,6 @@ class AuthController extends Controller
             Log::info('User id ' . $userId . ' updated own profile correctly.');
 
             return response()->json(
-
                 [
                     'success' => true,
                     'message' => 'User id ' . $id . ' updated own profile correctly.',
