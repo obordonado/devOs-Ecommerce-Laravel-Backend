@@ -23,8 +23,12 @@ class AuthController extends Controller
                 $request->all(),
                 [
                     'name' => ['required', 'string', 'max:255'],
-                    'email' => ['required', 'string', 'email', 'max:255' . 'unique:users'],
-                    'password' => 'required|string|min:6',
+                    'surname' => ['required', 'string', 'max:255'],
+                    'phone_number' => ['required', 'string','min:9','max:12'],
+                    'email' => ['required', 'string', 'email', 'max:35' . 'unique:users'],
+                    'password' => ['required','string','min:6','max:18'],
+                    'payment_type' =>['required','string'],
+                    'address'=> ['required', 'string', 'max:255']
                 ]
             );
 
@@ -37,8 +41,12 @@ class AuthController extends Controller
             $user = User::create(
                 [
                     'name' => $request->input('name'),
+                    'surname' => $request->input('surname'),
+                    'phone_number' => $request->input('phone_number'),
                     'email' => $request->input('email'),
-                    'password' => bcrypt($request->input('password'))
+                    'password' => bcrypt($request->input('password')),
+                    'payment_type' => $request->input('payment_type'),
+                    'address' => $request->input('address'),
                 ]
             );
 
@@ -77,8 +85,8 @@ class AuthController extends Controller
                         'success' => false,
                         'message' => 'Invalid Email or Password',
                     ],
-                    Response::HTTP_UNAUTHORIZED
-                ); // Symphony\Component\HttpFoundation\Response
+                    401
+                ); 
             }
 
             Log::info('User Login -> Correct');

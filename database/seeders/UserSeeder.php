@@ -18,33 +18,49 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert(
             [
-                'name' => 'Dani',
-                'email' => "dani@dani.com",
-                'password' => Hash::make('123456')
+                'name' => 'Óscar',
+                'surname' => 'Fernández',
+                'phone_number' => '632578412',
+                'email' => 'oscar@oscar.com',
+                'password' => Hash::make('123456'),
+                'payment_type' => 'bizum',
+                'address' => 'Calle luna 32'
             ]
         );
 
         DB::table('users')->insert(
             [
-                'name' => 'Cesar',
-                'email' => "cesar@cesar.com",
-                'password' => Hash::make('123456')
+                'name' => 'César',
+                'surname' => 'Fernández',
+                'phone_number' => '655278416',
+                'email' => 'cesar@cesar.com',
+                'password' => Hash::make('123456'),
+                'payment_type' => 'paypal',
+                'address' => 'Calle mayor 132'
             ]
         );
 
         DB::table('users')->insert(
             [
-                'name' => 'Angela',
-                'email' => "angela@angela.com",
-                'password' => Hash::make('123456')
+                'name' => 'Ángela',
+                'surname' => 'Molina',
+                'phone_number' => '633287410',
+                'email' => 'angela@angela.com',
+                'password' => Hash::make('123456'),
+                'payment_type' => 'paypal',
+                'address' => 'Calle brunete 1'
             ]
         );
 
         DB::table('users')->insert(
             [
                 'name' => 'Daniela',
-                'email' => "daniela@daniela.com",
-                'password' => Hash::make('123456')
+                'surname' => 'Martínez',
+                'phone_number' => '625571555',
+                'email' => 'daniela@daniela.com',
+                'password' => Hash::make('123456'),
+                'payment_type' => 'bizum',
+                'address' => 'Calle princesas 47'
             ]
         );
     }

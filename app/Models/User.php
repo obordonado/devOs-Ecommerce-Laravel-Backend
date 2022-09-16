@@ -20,8 +20,12 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'name',
+        'surname',
+        'phone_number',        
         'email',
         'password',
+        'payment_type',
+        'address'
     ];
 
     /**
@@ -57,22 +61,4 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany(Role::class);
     }
-
-    public function games()
-    {
-        return $this->hasMany(Game::class);
-    }
-    
-    public function channels()
-    {
-        return $this->belongsToMany(Channel::class);
-    }
-    
-    public function messages()
-    {
-        return $this->hasMany(Message::class);
-    }
-
-
-
 }
