@@ -26,23 +26,7 @@
 
 > ##### Los requisitos funcionales de la aplicación son los siguientes:
 <pre>
-> ● RF.1 Los usuarios se tienen que poder registrar a la aplicación, estableciendo un usuario/contraseña.
-> ● RF.2 Los usuarios tienen que autenticarse a la aplicación haciendo login.
-> ● RF.3 Los usuarios tienen que poder crear Partídas (grupos) para un determinado videojuego.
-> ● RF.4 Los usuarios tienen que poder buscar Partídas seleccionando un videojuego.
-> ● RF.5 Los usuarios pueden entrar y salir de una Party.
-> ● RF.6 Los usuarios tienen que poder enviar mensajes a la Party. Estos mensajes tienen que poder ser editados y borrados por su usuario creador.
-> ● RF.7 Los mensajes que existan en una Party se tienen que visualizar como un chat común.
-> ● RF.8 Los usuarios pueden introducir y modiﬁcar sus datos de perﬁl, por ejemplo, su usuario de Steam.
-> ● RF.9 Los usuarios tienen que poder hacer logout de la aplicación web.
-
-> ##### Además de de lo mencionado anteriormente se ha de incluir la siguiente funcionalidad:
-
-> ● Registro de usuarios.
-> ● Login de usuarios + token + middleware.
-> ● CRUD de los diferentes modelos.
-> ● Excelente Readme (IMPORTANTE).
-> ● Subida a producción en Heroku.
+> ● 
 </pre>
 
 ---
@@ -55,7 +39,7 @@
 
 > Para cumplir con los requisitos solicitados, se han creado las siguientes tablas y sus relaciones:
 
-<center><img src="/public/img/tablas-devos-laravel-lfg-api.png" style="width:800px;"/></center>
+<center><img src="/public/img/tablas-devos-ecommerce-laravel-backend.png" style="width:800px;"/></center>
 
 > El proyecto se ha realizado en una rama adicional de trabajo, haciendo un merge cuando se ha comprobado una o varias funcionalidades.
 
@@ -65,10 +49,10 @@
 * Conceder privilegios de admin o super admin a otros usuarios.
 * Quitar privilegios de admin o super admin a otros usuarios.
 * Eliminar usuarios.
-* Eliminar canales.
-* Eliminar mensajes.
+* Eliminar xxxx.
+* Eliminar xxxx.
 
-> Los usuarios sin privilegios podrán tener acceso a todo lo relacionado con su cuenta de usuario.
+> Los usuarios sin privilegios de administrador podrán tener acceso a todo aquello relacionado con su cuenta de usuario.
 
 > Para acceder a los endpoints, cualquier usuario puede hacerlo mediante distintas aplicaciones.
 > En la aplicación se ha incluido un archivo JSON con los datos exportado de los endpoints para importarlos en Postman o Thunder client.
@@ -80,8 +64,9 @@ Ubicación del archivo para importar en Postman o Visual Studio Code con Thunder
 Vista de Thunder Client en Visual Studio Code.
 <img src="/public/img/Thunder-client.png" style="width:200px;"/> 
 
-Vista de los distintos grupos creados para Postman.
-<img src="/public/img/Postman-user.png" style="width:155px;"/>  <img src="/public/img/Postman-Games.png" style="width:161px;"/>  <img src="/public/img/Postman-Channel.png" style="width:164px;"/>  <img src="/public/img/Postman-Messages.png" style="width:177px;"/>
+Vista de los distintos grupos creados para Thunder client.
+<img src="/public/img/Postman-user.png" style="width:155px;"/> 
+
 </pre>
 
 >* Al importar el archivo, se tendrá acceso a todos los endpoints y se podrá hacer uso como titular de la aplicación. - SE RUEGA PRECAUCIÓN -
