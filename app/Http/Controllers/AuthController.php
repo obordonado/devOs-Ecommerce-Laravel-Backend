@@ -112,21 +112,30 @@ class AuthController extends Controller
     public function me(Exception $exception)
     {
         try {
-            Log::info('User accessing own profile');
+            Log::info('User retrieved own profile correctly.');
 
             return response()->json(
                 [
+
                     'success' => true,
                     'message' => 'Retrieved Profile successfully',
-                    auth()->user()
+                    'data' => auth()->user()
+                ],
+                200
+            );
 
-                ]
-            );;
         } catch (\Exception $exception) {
             Log::info("Error accessing profile" . $exception->getMessage());
 
-            return response()->json();
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Error retrieving own profile.'
+                ],
+                401
+            );
         }
+ 
     }
 
     public function editOwnProfile(Request $request, $id)
