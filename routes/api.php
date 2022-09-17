@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,10 +41,12 @@ Route::group(['middleware' => ['jwt.auth', 'isSuperAdmin']], function () {
 });
 
 
-//// ROUTES FOR GAMES ////
-Route::get('/getallgames', [GameController::class, 'getAllGames']);
+//// ROUTES FOR PRODUCTS ////
+Route::get('/getallproducts', [ProductController::class, 'getAllProducts']);//OK
+Route::get('/getproductsbybrand', [ProductController::class, 'getProductsByBrand']);
+Route::get('/getproductsbyname', [ProductController::class, 'getProductsByName']);
 Route::get('/game/{id}', [GameController::class, 'getGameById']);
-Route::post('/getgamebytitle', [GameController::class, 'getGameByTitle']);
+
 
 
 Route::group(['middleware' => 'jwt.auth'], function(){
