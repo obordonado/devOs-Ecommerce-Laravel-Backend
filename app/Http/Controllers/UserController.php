@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
-    const ROLE_SUPER_ADMIN = 21;
+    const ROLE_SUPER_ADMIN = 3;
 
     public function addSuperAdminRoleToUser($id){
 
