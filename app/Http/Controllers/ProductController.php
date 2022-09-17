@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -149,4 +150,161 @@ class ProductController extends Controller
             );
         }
     }
+
+    public function createProduct(Request $request)
+    {
+        try {
+            $userId = auth()->user()->id;
+            Log::info('User id ' . $userId . ' is creating a product..');
+
+            $validator = Validator::make($request->all(),
+            [
+                'user_id' => ['required', 'integer'],
+                'brand' => ['required', 'string'],
+                'name' => ['required', 'string'],
+                'img_url' => ['required', 'string'],
+                'price' => ['required', 'integer'],
+            ]);
+            Log::info('User id ' . $userId . ' passed validator correctly.');
+
+            if ($validator->fails()) {
+
+                return response()->json(
+                    [
+                        "success" => false,
+                        "message" => 'Error creating new product. ' . $validator->errors()
+                    ],
+                    400
+                );
+            };
+
+            $user_id = $request->input('user_id');
+            $brand = $request->input('brand');
+            $name = $request->input('name');
+            $img_url = $request->input('img_url');
+            $price = $request->input('price');
+
+            $product = new Product();
+            $product->user_id = $user_id;
+            $product->brand = $brand;
+            $product->name = $name;
+            $product->img_url = $img_url;
+            $product->price = $price;
+            $product->save();
+
+            Log::info('User id '.$userId.' created product '.$brand.' '.$name.' correctly.');
+
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => 'User id '.$userId.' created product '.$brand.' '.$name.' correctly.'
+                ],
+                201
+            );
+        } catch (\Exception $exception) {
+
+            Log::info('Error creating new product '.$exception->getMessage());
+
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Error creating product.'
+                ],
+                400
+            );
+        }
+    }
+
+    public function editProductById(Request $request, $id)
+    {        
+        try {
+            $userId = auth()->user()->id;
+
+            Log::info('User id '.$userId.' updating product...');
+
+            $validator = Validator::make($request->all(),
+            [
+                'user_id' => ['required','integer'],
+                'brand' => ['required','string','min:2','max:45'],
+                'name' => ['required','string','min:2','max:45'],
+                'img_url' => ['required','string','min:8','max:120'],
+                'price' => ['required','integer'],
+            ]);
+
+            if($validator->fails()) {
+                Log::info('User id '.$userId.' validation error updating product. '.$validator->errors());
+
+                return response()->json(
+                    [
+                        'success' => false,
+                        'message' => 'User id '.$userId.' validation error updating product. '.$validator->errors()
+                    ],
+                    400
+                );
+            }            
+            Log::info('User id '.$userId.' passed validator correctly.');
+
+            $product = Product::query()-> find($id);            
+
+            if (!$product){
+                Log::info('Product '.$id.' does not exist.');
+
+                return response()->json(
+                    [
+                        'success' => false,
+                        'message' => 'This product does not exist.',
+                    ],
+                    404
+                );
+            }
+
+            $user_id = $request->input('user_id');
+            $brand = $request->input('brand');
+            $name = $request->input('name');
+            $img_url = $request->input('img_url');
+            $price= $request->input('price');
+
+            if(isset($user_id)){
+                $product->user_id = $user_id;
+            }
+
+            if(isset($brand)){
+                $product->brand = $brand;
+            }
+
+            if(isset($name)){
+                $product->name = $name;
+            }
+
+            if(isset($img_url)){
+                $product->img_url = $img_url;
+            }
+
+            if(isset($price)){
+                $product->price = $price;
+            }
+
+            $product->save();
+            Log::info('User id '.$userId.' updated product '.$name.' correctly.');
+
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => 'Message ' . $id . ' updated correctly.'
+                ],
+                200
+                );
+
+        } catch (\Exception $exception) {            
+            Log::info('Error updating product. ' . $exception->getMessage());
+            return response()->json(
+                [
+                    'success'=> false,
+                    'message' => 'Error updating product.'
+                ],
+                400
+            );
+        }
+    }
+    
 }

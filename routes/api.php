@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-//// ROUTES FOR USERS ////
+// ROUTES FOR USERS 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -32,17 +32,16 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 });
 
 Route::group(['middleware' => ['jwt.auth', 'isSuperAdmin']], function () {
-    Route::post('/user/adsupad/{id}', [UserController::class, 'addSuperAdminRoleToUser']);
-    Route::post('/user/remsupad/{id}', [UserController::class, 'removeSuperAdminRoleFromUser']);  
-    Route::get('/user/getallusersad/{id}',[UserController::class, 'getRoleUserByAdmin']);
-    Route::delete('/user/addelchan/{id}', [ChannelController::class, 'sadminDelChannelById']);
-    Route::delete('/user/addelmsg/{id}', [MessageController::class, 'delMessageById']);
-    Route::delete('/user/addeluser/{id}', [UserController::class, 'delUserById']);
+    Route::post('/user/addsuperadmin/{id}', [UserController::class, 'addSuperAdminRoleToUser']);
+    Route::post('/user/removesuperadmin/{id}', [UserController::class, 'removeSuperAdminRoleFromUser']);  
+    Route::get('/user/getallusersbyadmin/{id}',[UserController::class, 'getRoleUserByAdmin']);
+    Route::delete('/user/deleteuserby/{id}', [UserController::class, 'delUserById']);
     Route::post('/user/createproduct', [ProductController::class, 'createProduct']);
+    Route::put('/user/editproduct/{id}',[ProductController::class, 'editProductById']);
 });
 
 
-//// ROUTES FOR PRODUCTS ////
+// ROUTES FOR PRODUCTS
 Route::get('/getallproducts', [ProductController::class, 'getAllProducts']);//OK
 Route::get('/getproductsbybrand', [ProductController::class, 'getProductsByBrand']);
 Route::get('/getproductsbyname', [ProductController::class, 'getProductsByName']);
