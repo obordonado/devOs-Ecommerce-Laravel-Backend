@@ -19,7 +19,8 @@ class ProductSeeder extends Seeder
         DB::table('products')->insert(
             [
                 'user_id' => 1,
-                'name' => 'Helado chocolate',
+                'brand' => 'Special Creams',
+                'name' => 'Chocolate icecream',
                 'img_url' => 'https://helados.pro/wp-content/uploads/2018/11/Portada_helado_chocolate.jpg',
                 'price' => 3.50,
             ]
@@ -28,7 +29,8 @@ class ProductSeeder extends Seeder
         DB::table('products')->insert(
             [
                 'user_id' => 1,
-                'name' => 'Helado fresa',
+                'brand' => 'Special Creams',
+                'name' => 'Strawberry icecream',
                 'img_url' => 'https://assets.unileversolutions.com/recipes-v2/231124.jpg?imwidth=800',
                 'price' => 3.50,
             ]
@@ -38,8 +40,29 @@ class ProductSeeder extends Seeder
         DB::table('products')->insert(
             [
                 'user_id' => 1,
-                'name' => 'Helado vainilla',
+                'brand' => 'Special Creams',
+                'name' => 'Vanilla icecream',
                 'img_url' => 'https://recetinas.com/wp-content/uploads/2018/08/helado-de-vainilla.jpg',
+                'price' => 3.50,
+            ]
+        );
+
+        DB::table('products')->insert(
+            [
+                'user_id' => 1,
+                'brand' => 'Sorted Creams',
+                'name' => 'Fruit smoothie',
+                'img_url' => 'http://www.recetario-cocina.com/archivosbd/helados-caseros-de-frutas.jpg',
+                'price' => 3.50,
+            ]
+        );
+
+        DB::table('products')->insert(
+            [
+                'user_id' => 1,
+                'brand' => 'Sorted Creams',
+                'name' => 'Fresh fruits diabetics icecream',
+                'img_url' => 'https://cdn.statically.io/img/dulcesdiabeticos.com/wp-content/uploads/2017/06/helados-de-frutas-saludables-sin-azucar_opt-1.jpg?quality=100&f=auto',
                 'price' => 3.50,
             ]
         );
