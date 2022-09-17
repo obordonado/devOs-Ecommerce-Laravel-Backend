@@ -12,17 +12,14 @@ class UserController extends Controller
 {
     const ROLE_SUPER_ADMIN = 3;
 
-    public function addSuperAdminRoleToUser($id){
-
-        try {
-            
+    public function addSuperAdminRoleToUser($id)
+    {
+        try {            
             $userId = auth()->user()->id;
 
             Log::info('Adding role super admin to user '.$id);
-  
             $user = User::find($id);
             $user->roles()->attach(self::ROLE_SUPER_ADMIN);
-
             Log::info(('Added super admin role to user '.$id.' correctly.'));
 
             return response()->json(
@@ -34,7 +31,6 @@ class UserController extends Controller
             );
 
         } catch (\Exception $exception) {
-
             Log::info('Error adding role super admin to user '.$exception->getMessage());
 
             return response()->json(
@@ -47,17 +43,14 @@ class UserController extends Controller
         }
     }
 
-    public function removeSuperAdminRoleFromUser($id){
-
-        try {
-            
+    public function removeSuperAdminRoleFromUser($id)
+    {
+        try {            
             $userId = auth()->user()->id;
 
             Log::info('Removing role super admin from user '.$id.'.');
-  
             $user = User::find($id); 
             $user->roles()->detach(self::ROLE_SUPER_ADMIN);
-
             Log::info(('Removed super admin role from user '.$id.' correctly.'));
 
             return response()->json(
@@ -67,9 +60,7 @@ class UserController extends Controller
                 ],
                 200
             );
-
         } catch (\Exception $exception) {
-
             Log::info('Error deleting role super admin from user '.$exception->getMessage());
 
             return response()->json(
@@ -82,8 +73,8 @@ class UserController extends Controller
         }
     }
 
-    public function getRoleUserByAdmin($id){
-
+    public function getRoleUserByAdmin($id)
+    {
         try {
             
             $userId = auth()->user()->id;
@@ -108,9 +99,7 @@ class UserController extends Controller
                 ],
                 200
             );
-
         } catch (\Exception $exception) {
-
             Log::info('Error getting all role id 1 users by super admin. '.$exception->getMessage());
 
             return response()->json(
@@ -123,13 +112,12 @@ class UserController extends Controller
         }
     }
 
-    public function delUserById($id){
-        
+    public function delUserById($id)
+    {        
         try {
             $userId = auth()->user()->id;
 
             Log::info('User id '.$userId.' deleting user...');
-
             $user = User::query()-> find($id);            
 
             if (!$user){
@@ -145,7 +133,6 @@ class UserController extends Controller
             }
 
             $user->delete();
-
             Log::info('User id '.$userId.' deleted user id '.$id.' correctly.');
 
             return response()->json(
@@ -155,9 +142,7 @@ class UserController extends Controller
                 ],
                 200
                 );
-
-        } catch (\Exception $exception) {
-            
+        } catch (\Exception $exception) {            
             Log::info('Error deleting user. '.$exception->getMessage());
 
             return response()->json(

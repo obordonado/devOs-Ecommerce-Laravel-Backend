@@ -55,8 +55,8 @@ class AuthController extends Controller
 
             $token = JWTAuth::fromUser($user);
             Log::info('New user created');
-
             return response()->json(compact('user', 'token'), 201);
+
         } catch (\Exception $exception) {
             Log::info('Error creating user. ' . $exception->getMessage());
 
@@ -64,7 +64,6 @@ class AuthController extends Controller
                 [
                     'success' => false,
                     'message' => 'Error creating user.'
-
                 ]
             );
         }
@@ -89,14 +88,14 @@ class AuthController extends Controller
                     401
                 ); 
             }
-
             Log::info('User Login -> Correct');
 
             return response()->json(
                 [
                     'success' => true,
                     'token' => $jwt_token,
-                ]
+                ],
+                200
             );
         } catch (\Exception $exception) {
 
@@ -117,14 +116,12 @@ class AuthController extends Controller
 
             return response()->json(
                 [
-
                     'success' => true,
                     'message' => 'Retrieved Profile successfully',
                     'data' => auth()->user()
                 ],
                 200
             );
-
         } catch (\Exception $exception) {
             Log::info("Error accessing profile" . $exception->getMessage());
 
@@ -135,16 +132,13 @@ class AuthController extends Controller
                 ],
                 401
             );
-        }
- 
+        } 
     }
 
     public function editOwnProfile(Request $request, $id)
     {
         try {
-
             $userId = auth()->user()->id;
-
             Log::info('User id ' . $userId . ' updating own profile');
 
             $validator = Validator::make(
@@ -165,7 +159,7 @@ class AuthController extends Controller
                 return response()->json(
                     [
                         'success' => false,
-                        'message' => $validator->errors()
+                        'message' => 'Error in validation. '.$validator->errors()
                     ],
                     400
                 );
@@ -211,7 +205,6 @@ class AuthController extends Controller
             }
 
             $user->save();
-
             Log::info('User id ' . $userId . ' updated own profile correctly.');
 
             return response()->json(
@@ -219,10 +212,9 @@ class AuthController extends Controller
                     'success' => true,
                     'message' => 'User id ' . $id . ' updated own profile correctly.',
                 ],
-                200
+                201
             );
         } catch (\Exception $exception) {
-
             Log::info('An error ocurred while updating user id ' . $userId . ' profile ' . $exception->getMessage());
 
             return response()->json(
@@ -237,33 +229,30 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        Log::info('User Logging out');
+        Log::info('User Logging out...');
 
-        $this->validate($request, [
-            'token' => 'required'
-        ]);
+        $this->validate($request, ['token' => 'required']);
 
         try {
-
             JWTAuth::invalidate($request->token);
-
-            Log::info('User Logged out');
+            Log::info('User Logged out correctly.');
 
             return response()->json(
                 [
-                'success' => true,
-                'message' => 'User logged out successfully'
+                    'success' => true,
+                    'message' => 'User logged out correctly.'
                 ]
             );
         } catch (\Exception $exception) {
-            Log::info('Error Logging out' . $exception->getMessage());
+            Log::info('Error Logging out. ' . $exception->getMessage());
 
             return response()->json(
                 [
-                'success' => false,
-                'message' => 'Sorry, the user cannot be logged out'
+                    'success' => false,
+                    'message' => 'Sorry, the user cannot be logged out'
                 ],
-                Response::HTTP_INTERNAL_SERVER_ERROR);
+                500
+                );
             }
-        }
+        }       
     }

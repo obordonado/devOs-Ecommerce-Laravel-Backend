@@ -38,6 +38,7 @@ Route::group(['middleware' => ['jwt.auth', 'isSuperAdmin']], function () {
     Route::delete('/user/addelchan/{id}', [ChannelController::class, 'sadminDelChannelById']);
     Route::delete('/user/addelmsg/{id}', [MessageController::class, 'delMessageById']);
     Route::delete('/user/addeluser/{id}', [UserController::class, 'delUserById']);
+    Route::post('/user/createproduct', [ProductController::class, 'createProduct']);
 });
 
 
@@ -47,8 +48,6 @@ Route::get('/getproductsbybrand', [ProductController::class, 'getProductsByBrand
 Route::get('/getproductsbyname', [ProductController::class, 'getProductsByName']);
 Route::get('/getproductbyid/{id}', [ProductController::class, 'getProductById']);
 
-
-
 Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('/creategame', [GameController::class, 'createNewGame']);
     Route::post('/getallgames/{id}', [GameController::class, 'getOwnGamesByUserId']);
@@ -56,7 +55,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::delete('/game/delete/{id}', [GameController::class, 'deleteGameById']);
 });
 
-//// ROUTES FOR CHANNELS ////
+//// ROUTES FOR SALES ////
 Route::get('/getallchannels', [ChannelController::class, 'getAllChannels']);
 Route::get('/channel/{id}', [ChannelController::class, 'getChannelById']);
 Route::get('/channelbyname',[ChannelController::class, 'getChannelByName']);

@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
-    public function getAllProducts(){
+    public function getAllProducts()
+    {
         try {
             Log::info('Getting all products...');
 
@@ -17,40 +18,35 @@ class ProductController extends Controller
             ->select()
             ->get()
             ->toArray();      
-
-           Log::info('All products retrieved correctly.');
+            Log::info('All products retrieved correctly.');
 
             return response()->json(
                     [
-                    'success'=> true,
-                    'message' => 'Available products retrieved successfully.',
-                    'data'=> $products
+                        'success'=> true,
+                        'message' => 'Available products retrieved successfully.',
+                        'data'=> $products
                     ],
                     200
-                );
-        
+                );        
         } catch (\Exception $exception) {
-
             Log::error('Error getting available products. '.$exception->getMessage());
 
             return response()->json(
                 [
-                'success'=> false,
-                'message' => 'Available products could not be retrieved.'
+                    'success'=> false,
+                    'message' => 'Available products could not be retrieved.'
                 ],
                 400
             );
         }
     }
 
-    public function getProductsByBrand(Request $request){
-
-        try {
-            
+    public function getProductsByBrand(Request $request)
+    {
+        try {            
             Log::info('Getting products by brand...');
 
             $brand = $request->input('brand');
-
             $brand = Product::query()->where('brand','=',$brand)->get()->toArray();
 
             if(!$brand) {
@@ -63,35 +59,33 @@ class ProductController extends Controller
                 );
             }
     
-            return response()->json([
-    
-                'success' => true,
-                'message' => 'Products were retrieved by brand correctly.',
-                'data' => $brand
-            ]);
-            
+            return response()->json(
+                [    
+                    'success' => true,
+                    'message' => 'Products were retrieved by brand correctly.',
+                    'data' => $brand
+                ]
+            );
             Log::info('Products were retrieved by brand correctly.');
 
         } catch (\Exception $exception) {
-
             Log::info('Error getting products by brand. '. $exception->getMessage());
 
-            return response()->json([
-                
-                'success' => false,
-                'message' => 'Failed to get products by brand.'
-            ]);
+            return response()->json(
+                [                
+                    'success' => false,
+                    'message' => 'Failed to get products by brand.'
+                ]
+            );
         }
     }
 
-    public function getProductsByname(Request $request){
-
-        try {
-            
+    public function getProductsByname(Request $request)
+    {
+        try {            
             Log::info('Getting products by name...');
 
             $name = $request->input('name');
-
             $name = Product::query()->where('name','=',$name)->get()->toArray();
 
             if(!$name) {
@@ -103,47 +97,49 @@ class ProductController extends Controller
                     400
                 );
             }
-    
-            return response()->json([
-    
-                'success' => true,
-                'message' => 'Products were retrieved by name correctly.',
-                'data' => $name
-            ]);
-            
+
+            return response()->json(
+                [    
+                    'success' => true,
+                    'message' => 'Products were retrieved by name correctly.',
+                    'data' => $name
+                ],
+                200
+        );
             Log::info('Products were retrieved by name correctly.');
 
         } catch (\Exception $exception) {
-
             Log::info('Error getting products by name. '. $exception->getMessage());
 
-            return response()->json([
-                
-                'success' => false,
-                'message' => 'Failed to get products by name.'
-            ]);
+            return response()->json(
+                [                
+                    'success' => false,
+                    'message' => 'Failed to get products by name.'
+                ],
+                400
+            );
         }
     }
 
-    public function getProductById($id){
-        try {
-            
+    public function getProductById($id)
+    {
+        try {            
             Log::info('Getting product by id...');
             $product = Product::findOrFail($id);
             Log::info('Getting product by id worked correctly.');
 
             return response()->json(
                 [
-                'success'=> true,
-                'message' => 'Product retrieved successfully.',
-                'data'=> $product
+                    'success'=> true,
+                    'message' => 'Product retrieved successfully.',
+                    'data'=> $product
                 ],
                 200
             );
     
         } catch (\Exception $exception) {
-
             Log::error('Getting product by id failed. '.$exception->getMessage());
+
             return response()->json(
                 [
                     'success' => false,
@@ -153,5 +149,4 @@ class ProductController extends Controller
             );
         }
     }
-
 }
