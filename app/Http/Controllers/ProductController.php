@@ -307,4 +307,51 @@ class ProductController extends Controller
         }
     }
     
+    public function deleteProductById($id)
+    {
+        
+        try {
+            $userId = auth()->user()->id;
+
+            Log::info('User id '.$userId.' deleting product...');
+
+            $product = Product::query()-> find($id);            
+
+            if (!$product){
+                Log::info('Product id '.$id.' does not exist.');
+
+                return response()->json(
+                    [
+                        'success' => false,
+                        'message' => 'This product id does not exist.',
+                    ],
+                    404
+                );
+            }
+
+            $product->delete();
+            Log::info('User id '.$userId.' deleted product correctly.');
+
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => 'Message '.$id.' deleted correctly.',
+
+                ],
+                200
+                );
+
+        } catch (\Exception $exception) {            
+            Log::info('Error deleting product. '.$exception->getMessage());
+
+            return response()->json(
+                [
+                    'success'=> false,
+                    'message' => 'Error deleting product.'
+                ],
+                400
+            );
+        }
+    }
+
 }

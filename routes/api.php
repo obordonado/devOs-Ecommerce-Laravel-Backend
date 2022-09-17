@@ -38,6 +38,7 @@ Route::group(['middleware' => ['jwt.auth', 'isSuperAdmin']], function () {
     Route::delete('/user/deleteuserby/{id}', [UserController::class, 'delUserById']);
     Route::post('/user/createproduct', [ProductController::class, 'createProduct']);
     Route::put('/user/editproduct/{id}',[ProductController::class, 'editProductById']);
+    Route::delete('/user/deleteproduct/{id}', [ProductController::class, 'deleteProductById']);
 });
 
 
