@@ -128,7 +128,7 @@ class ProductController extends Controller
     public function getProductById($id){
         try {
             
-            Log::info('Getting product by Id...');
+            Log::info('Getting product by id...');
             $product = Product::findOrFail($id);
             Log::info('Getting product by id worked correctly.');
 
