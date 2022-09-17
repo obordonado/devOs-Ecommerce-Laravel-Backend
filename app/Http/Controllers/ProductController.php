@@ -16,8 +16,8 @@ class ProductController extends Controller
             $products = DB::table('products')
             ->select()
             ->get()
-            ->toArray();  
-            
+            ->toArray();      
+
            Log::info('All products retrieved correctly.');
 
             return response()->json(
@@ -52,6 +52,16 @@ class ProductController extends Controller
             $brand = $request->input('brand');
 
             $brand = Product::query()->where('brand','=',$brand)->get()->toArray();
+
+            if(!$brand) {
+                return response()->json(
+                    [
+                        'success' => false,
+                        'message' => 'Brand does not exist.'
+                    ],
+                    400
+                );
+            }
     
             return response()->json([
     
@@ -83,6 +93,16 @@ class ProductController extends Controller
             $name = $request->input('name');
 
             $name = Product::query()->where('name','=',$name)->get()->toArray();
+
+            if(!$name) {
+                return response()->json(
+                    [
+                        'success' => false,
+                        'message' => 'Chosen name does not exist.'
+                    ],
+                    400
+                );
+            }
     
             return response()->json([
     
@@ -91,7 +111,7 @@ class ProductController extends Controller
                 'data' => $name
             ]);
             
-            Log::info('Products were retrieved by brand correctly.');
+            Log::info('Products were retrieved by name correctly.');
 
         } catch (\Exception $exception) {
 
@@ -105,5 +125,33 @@ class ProductController extends Controller
         }
     }
 
+    public function getProductById($id){
+        try {
+            
+            Log::info('Getting product by Id...');
+            $product = Product::findOrFail($id);
+            Log::info('Getting product by id worked correctly.');
+
+            return response()->json(
+                [
+                'success'=> true,
+                'message' => 'Product retrieved successfully.',
+                'data'=> $product
+                ],
+                200
+            );
+    
+        } catch (\Exception $exception) {
+
+            Log::error('Getting product by id failed. '.$exception->getMessage());
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Could not retrieve product by id.'
+                ],
+                400
+            );
+        }
+    }
 
 }

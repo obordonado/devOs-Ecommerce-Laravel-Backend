@@ -45,7 +45,7 @@ Route::group(['middleware' => ['jwt.auth', 'isSuperAdmin']], function () {
 Route::get('/getallproducts', [ProductController::class, 'getAllProducts']);//OK
 Route::get('/getproductsbybrand', [ProductController::class, 'getProductsByBrand']);
 Route::get('/getproductsbyname', [ProductController::class, 'getProductsByName']);
-Route::get('/game/{id}', [GameController::class, 'getGameById']);
+Route::get('/getproductbyid/{id}', [ProductController::class, 'getProductById']);
 
 
 
