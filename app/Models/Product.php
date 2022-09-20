@@ -17,10 +17,10 @@ class Product extends Model
     
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
     public function products()
     {
-        return $this->hasMany(Sale::class);
+        return $this->belongsTo(Sale::class);
     }
 }

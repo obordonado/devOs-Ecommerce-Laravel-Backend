@@ -5,6 +5,7 @@ use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -61,7 +62,7 @@ Route::get('/channel/{id}', [ChannelController::class, 'getChannelById']);
 Route::get('/channelbyname',[ChannelController::class, 'getChannelByName']);
 
 Route::group(['middleware' =>'jwt.auth'], function(){
-    Route::post('/channel', [ChannelController::class, 'createChannel']);
+    Route::post('/createsale', [SaleController::class, 'createSale']);
     Route::post('/joinchannel/{id}', [ChannelController::class, 'joinChannelById']);
     Route::post('/exitchannel/{id}', [ChannelController::class, 'exitChannelById']);
     Route::put('/channelupdate/{id}', [ChannelController::class, 'updateChannelById']);

@@ -23,7 +23,7 @@ class Sale extends Model
     }
     public function sales()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsTo(Product::class);
     }
 
 }
