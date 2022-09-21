@@ -44,30 +44,21 @@ Route::group(['middleware' => ['jwt.auth', 'isSuperAdmin']], function () {
 
 
 // ROUTES FOR PRODUCTS
-Route::get('/getallproducts', [ProductController::class, 'getAllProducts']);//OK
+Route::get('/getallproducts', [ProductController::class, 'getAllProducts']);
 Route::get('/getproductsbybrand', [ProductController::class, 'getProductsByBrand']);
 Route::get('/getproductsbyname', [ProductController::class, 'getProductsByName']);
 Route::get('/getproductbyid/{id}', [ProductController::class, 'getProductById']);
 
-Route::group(['middleware' => 'jwt.auth'], function(){
-    Route::post('/creategame', [GameController::class, 'createNewGame']);
-    Route::post('/getallgames/{id}', [GameController::class, 'getOwnGamesByUserId']);
-    Route::put('/updategame/{id}', [GameController::class, 'updateGameById']);
-    Route::delete('/game/delete/{id}', [GameController::class, 'deleteGameById']);
-});
+
 
 //// ROUTES FOR SALES ////
-Route::get('/getallchannels', [ChannelController::class, 'getAllChannels']);
-Route::get('/channel/{id}', [ChannelController::class, 'getChannelById']);
-Route::get('/channelbyname',[ChannelController::class, 'getChannelByName']);
-
-
 Route::group(['middleware' =>'jwt.auth'], function(){
     Route::post('/createsale', [SaleController::class, 'createSale']);
-    Route::post('/joinchannel/{id}', [ChannelController::class, 'joinChannelById']);
-    Route::post('/exitchannel/{id}', [ChannelController::class, 'exitChannelById']);
-    Route::put('/channelupdate/{id}', [ChannelController::class, 'updateChannelById']);
+    Route::get('/getownpurchases/{id}', [SaleController::class, 'getOwnPurchases']);
+
 });
+
+
 
 //// ROUTES FOR MESSAGES ////
 Route::get('/messagesbychannelid/{id}', [MessageController::class, 'getMessagesByChannelId']);

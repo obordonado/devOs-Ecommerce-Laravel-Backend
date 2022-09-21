@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -69,6 +70,36 @@ class SaleController extends Controller
                 ],
                 400
             );
+        }
+    }
+
+    public function getOwnPurchases($id) 
+    {
+        try {
+            $userId = auth()->user()->id;
+
+            $sales = User::query()->find($userId)->sales;
+
+            Log::info('User id '.$userId.' recovered past purchases correctly.');
+
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => $sales
+                ],
+                200
+            );
+            
+        } catch (\Exception $exception) {
+            Log::info('Error getting own purchases '.$exception->getMessage());
+
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'User id '.$userId.' failed to get past purchases.'
+                ],
+                400
+                );
         }
     }
 }
