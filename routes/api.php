@@ -61,6 +61,7 @@ Route::get('/getallchannels', [ChannelController::class, 'getAllChannels']);
 Route::get('/channel/{id}', [ChannelController::class, 'getChannelById']);
 Route::get('/channelbyname',[ChannelController::class, 'getChannelByName']);
 
+
 Route::group(['middleware' =>'jwt.auth'], function(){
     Route::post('/createsale', [SaleController::class, 'createSale']);
     Route::post('/joinchannel/{id}', [ChannelController::class, 'joinChannelById']);
