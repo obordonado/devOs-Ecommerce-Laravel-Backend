@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class SaleController extends Controller
 {
-    public function createSale(Request $request)
+    public function createPurchase(Request $request)
     {
         try {
             $userId = auth()->user()->id;
@@ -205,6 +205,82 @@ class SaleController extends Controller
                 [
                     'success' => false,
                     'message' => 'Page not found.'
+                ],
+                404
+            );        
+        }
+    }
+
+    public function getSaleByUserId(Request $request, $id)
+    {
+        try {
+            $userId=auth()->user()->id;
+            Log::info('User id '.$userId.' getting all purchases by user id...');
+
+            $purchase = Sale::query()->where('user_id','=',$id)->get()->toArray();
+            
+            if(!$purchase){
+                return response()->json(
+                    [
+                        'success'=> false,
+                        'message' => 'Not found.'
+                    ],
+                    404
+                );
+            }
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => 'User id '.$userId.' retrieved all purchases of user id '.$id.' correctly.',
+                    'data' => $purchase
+                ],
+                200
+            );
+    }catch (\Exception $exception) {
+            Log::info('Error getting purchase by email. '.$exception->getMessage());
+
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Error getting purchase by email.'
+                ],
+                500
+            );        
+        }
+    }
+
+    public function getSaleById(Request $request, $id)
+    {
+        try {
+            $userId=auth()->user()->id;
+            Log::info('User id '.$userId.' getting purchase by id...');
+
+            $purchase = Sale::query()->where('id','=',$id)->get()->toArray();
+            
+            if(!$purchase){
+                return response()->json(
+                    [
+                        'success'=> false,
+                        'message' => 'Not found.'
+                    ],
+                    404
+                );
+            }
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => 'User id '.$userId.' retrieved purchase by id '.$id.' correctly.',
+                    'data' => $purchase
+                ],
+                200
+            );
+    }catch (\Exception $exception) {
+            Log::info('Error getting purchase by id. '.$exception->getMessage());
+
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Error getting purchase by id.'
                 ],
                 404
             );        

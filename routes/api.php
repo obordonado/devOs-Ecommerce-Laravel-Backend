@@ -42,6 +42,8 @@ Route::group(['middleware' => ['jwt.auth', 'isSuperAdmin']], function () {
     Route::put('/user/editproduct/{id}',[ProductController::class, 'editProductById']);
     Route::delete('/user/deleteproduct/{id}', [ProductController::class, 'deleteProductById']);
     // Route::delete('/deletepurchasebyid{id}', [SaleController::class, 'deletePurchaseById']); Not active due to the nature of the product. (No refunds allowed). Kept for scalability.
+    Route::get('/user/getsalesbyuserid/{id}', [SaleController::class, 'getSaleByUserId']);
+    Route::get('/user/getsalebyid/{id}',[SaleController::class, 'getSaleById']);
 });
 
 
@@ -53,9 +55,9 @@ Route::get('/getproductbyid/{id}', [ProductController::class, 'getProductById'])
 
 
 
-//// ROUTES FOR SALES ////
+// ROUTES FOR SALES
 Route::group(['middleware' =>'jwt.auth'], function(){
-    Route::post('/createsale', [SaleController::class, 'createSale']);
+    Route::post('/createpurchase', [SaleController::class, 'createPurchase']);
     Route::get('/getownpurchases', [SaleController::class, 'getOwnPurchases']);
     Route::get('/getownpurchasesbyid/{id}', [SaleController::class, 'getOwnPurchasesById']);
 
@@ -63,7 +65,7 @@ Route::group(['middleware' =>'jwt.auth'], function(){
 
 
 
-//// ROUTES FOR MESSAGES ////
+// ROUTES FOR MESSAGES 
 Route::get('/messagesbychannelid/{id}', [MessageController::class, 'getMessagesByChannelId']);
 
 Route::group(['middleware' => 'jwt.auth'], function(){
