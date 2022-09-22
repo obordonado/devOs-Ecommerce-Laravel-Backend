@@ -36,7 +36,6 @@ class SaleController extends Controller
                     400
                 );
             };
-
             $user_id = $request->input('user_id');
             $total_price = $request->input('total_price');
             $rating = $request->input('rating');
@@ -46,10 +45,8 @@ class SaleController extends Controller
             $sale->user_id = $user_id;
             $sale->total_price = $total_price;
             $sale->rating = $rating;
-            $sale->status = $status;
-            
+            $sale->status = $status;            
             $sale->save();
-
             Log::info('User id '.$userId.' purchased a total of '.$total_price.' € correctly.');
 
             return response()->json(
@@ -77,9 +74,7 @@ class SaleController extends Controller
     {
         try {
             $userId = auth()->user()->id;
-
             $sales = User::query()->find($userId)->sales;
-
             Log::info('User id '.$userId.' recovered past purchases correctly.');
 
             return response()->json(
@@ -89,7 +84,6 @@ class SaleController extends Controller
                 ],
                 200
             );
-
         } catch (\Exception $exception) {
             Log::info('Error getting own purchases '.$exception->getMessage());
 
@@ -99,27 +93,16 @@ class SaleController extends Controller
                     'message' => 'User id '.$userId.' failed to get past purchases.'
                 ],
                 400
-                );
+            );
         }
     }
 
-
-
     public function getOwnPurchasesById($id)
     {
-
-
         try {        
             $userId = auth()->user()->id;   
             Log::info('User id '.$userId.' getting purchase by id...');
-
-            $purchase = Sale::findOrFail($id);
-
-            $purchase = Sale::query()
-            ->where('id','=',$id)
-            ->where('user_id','=',$userId)
-            ->get()
-            ->toArray();
+            $purchase = Sale::query()->where('id','=',$id)->where('user_id','=',$userId)->get()->toArray();
 
             if(!$purchase){
                 return response()->json(
@@ -127,8 +110,8 @@ class SaleController extends Controller
                         'success'=> false,
                         'message'=> 'Purchase does not exist.'
                     ],
-                    401
-                    );
+                    400
+                );
             }
 
             return response()->json(
@@ -138,9 +121,7 @@ class SaleController extends Controller
                     'purchase' => $purchase
                 ],
                 200
-                );
-
-
+            );
         } catch (\Exception $exception) {
             Log::info('Error getting purchase by Id '.$exception->getMessage());
 
@@ -150,8 +131,48 @@ class SaleController extends Controller
                     'message' => 'User id '.$userId.' failed to get purchase by Id.'
                 ],
                 400
-                );
+            );
         }
-    }    
+    }
+
+    public function deletePurchaseById($id)
+    {
+        try {
+            $userId = auth()->user()->id;
+            Log::info('User id '.$userId. ' deleting purchase...');
+
+            $purchase = Sale::query()->where('user_id','=',$userId)->where('id','=',$id)->get();
+
+            if(!$purchase){
+
+                return response()->json(
+                    [
+                        'success' => false,
+                        'message' => 'The purchase id does not exist.'
+                    ],
+                    400
+                );
+            }
+            
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => 'Purchase id '.$id.' deleted correctly by user id '.$userId
+                ],
+                200
+            );            
+        } catch (\Exception $exception) {
+            Log::info('Error getting purchase by Id '.$exception->getMessage());
+
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'User id '.$userId.' failed to get purchase by Id.'
+                ],
+                400
+            );        
+        }
+    }
+
 
 }

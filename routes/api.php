@@ -40,6 +40,7 @@ Route::group(['middleware' => ['jwt.auth', 'isSuperAdmin']], function () {
     Route::post('/user/createproduct', [ProductController::class, 'createProduct']);
     Route::put('/user/editproduct/{id}',[ProductController::class, 'editProductById']);
     Route::delete('/user/deleteproduct/{id}', [ProductController::class, 'deleteProductById']);
+    // Route::delete('/deletepurchasebyid{id}', [SaleController::class, 'deletePurchaseById']); Not active due to the nature of the product. (No refunds allowed). Kept for scalability.
 });
 
 
