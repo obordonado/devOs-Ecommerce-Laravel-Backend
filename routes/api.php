@@ -54,7 +54,8 @@ Route::get('/getproductbyid/{id}', [ProductController::class, 'getProductById'])
 //// ROUTES FOR SALES ////
 Route::group(['middleware' =>'jwt.auth'], function(){
     Route::post('/createsale', [SaleController::class, 'createSale']);
-    Route::get('/getownpurchases/{id}', [SaleController::class, 'getOwnPurchases']);
+    Route::get('/getownpurchases', [SaleController::class, 'getOwnPurchases']);
+    Route::get('/getownpurchasesbyid/{id}', [SaleController::class, 'getOwnPurchasesById']);
 
 });
 

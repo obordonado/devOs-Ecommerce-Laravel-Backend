@@ -73,7 +73,7 @@ class SaleController extends Controller
         }
     }
 
-    public function getOwnPurchases($id) 
+    public function getOwnPurchases() 
     {
         try {
             $userId = auth()->user()->id;
@@ -89,7 +89,7 @@ class SaleController extends Controller
                 ],
                 200
             );
-            
+
         } catch (\Exception $exception) {
             Log::info('Error getting own purchases '.$exception->getMessage());
 
@@ -102,4 +102,56 @@ class SaleController extends Controller
                 );
         }
     }
+
+
+
+    public function getOwnPurchasesById($id)
+    {
+
+
+        try {        
+            $userId = auth()->user()->id;   
+            Log::info('User id '.$userId.' getting purchase by id...');
+
+            $purchase = Sale::findOrFail($id);
+
+            $purchase = Sale::query()
+            ->where('id','=',$id)
+            ->where('user_id','=',$userId)
+            ->get()
+            ->toArray();
+
+            if(!$purchase){
+                return response()->json(
+                    [
+                        'success'=> false,
+                        'message'=> 'Purchase does not exist.'
+                    ],
+                    401
+                    );
+            }
+
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => 'User id '.$id.' recovered purchase correctly.' ,
+                    'purchase' => $purchase
+                ],
+                200
+                );
+
+
+        } catch (\Exception $exception) {
+            Log::info('Error getting purchase by Id '.$exception->getMessage());
+
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'User id '.$userId.' failed to get purchase by Id.'
+                ],
+                400
+                );
+        }
+    }    
+
 }
