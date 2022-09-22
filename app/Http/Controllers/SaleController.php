@@ -112,7 +112,7 @@ class SaleController extends Controller
                     ],
                     400
                 );
-            }
+            }Log::info('User id '.$userId.' retrieved purchase by id '.$id.' correctly.');
 
             return response()->json(
                 [
@@ -140,7 +140,6 @@ class SaleController extends Controller
         try {
             $userId = auth()->user()->id;
             Log::info('User id '.$userId. ' deleting purchase...');
-
             $purchase = Sale::query()->where('user_id','=',$userId)->where('id','=',$id)->get();
 
             if(!$purchase){
@@ -152,15 +151,15 @@ class SaleController extends Controller
                     ],
                     400
                 );
-            }
-            
+            }Log::info('User id '.$userId.' deleted purchase id '.$id.' correctly.');
+
             return response()->json(
                 [
                     'success' => true,
                     'message' => 'Purchase id '.$id.' deleted correctly by user id '.$userId
                 ],
                 200
-            );            
+            );          
         } catch (\Exception $exception) {
             Log::info('Error getting purchase by Id '.$exception->getMessage());
 
@@ -173,6 +172,43 @@ class SaleController extends Controller
             );        
         }
     }
+    public function getAllSalesBySuperAdmin()
+    {
+        try {
+            $userId = auth()->user()->id;
+            Log::info('User id '.$userId.' trying to get all sales...');
+            $sales = Sale::query()->get()->toArray();
 
+            if(!$sales){
 
+                return response()->json(
+                    [
+                        'success'=> true,
+                        'message'=> 'There are no sales yet.'
+                    ],
+                    200
+                );
+            }Log::info('User id '.$userId.' retrieved all sales correctly.');
+
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => 'Retrieved all sales correctly.',
+                    'data' => $sales
+                ],
+                200
+            );            
+        } catch (\Exception $exception) {
+            Log::info('Error getting all users. '.$exception->getMessage());
+
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Page not found.'
+                ],
+                404
+            );        
+        }
+    }
 }
+

@@ -30,7 +30,8 @@ class IsSuperAdmin
         $isSuperAdmin = $user->roles->contains(self::ROLE_SUPER_ADMIN);
 
         if(!$isSuperAdmin){
-
+            Log::info('User is not super admin -> response 404.');
+            
             return response()->json(
                 [
                     'success' => false,

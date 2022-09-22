@@ -35,7 +35,8 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 Route::group(['middleware' => ['jwt.auth', 'isSuperAdmin']], function () {
     Route::post('/user/addsuperadmin/{id}', [UserController::class, 'addSuperAdminRoleToUser']);
     Route::post('/user/removesuperadmin/{id}', [UserController::class, 'removeSuperAdminRoleFromUser']);  
-    Route::get('/user/getallusersbyadmin/{id}',[UserController::class, 'getRoleUserByAdmin']);
+    Route::get('/user/getallusersbyadmin/{id}',[UserController::class, 'getRoleUserByAdmin']);//Gets all users that are not admin or superadmin when $id=1.
+    Route::get('/user/getallsalesbyadmin', [SaleController::class, 'getAllSalesBySuperAdmin']);
     Route::delete('/user/deleteuserby/{id}', [UserController::class, 'delUserById']);
     Route::post('/user/createproduct', [ProductController::class, 'createProduct']);
     Route::put('/user/editproduct/{id}',[ProductController::class, 'editProductById']);
