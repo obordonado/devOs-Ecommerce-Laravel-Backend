@@ -20,9 +20,9 @@ class SaleController extends Controller
             $validator = Validator::make($request->all(),
             [
                 'user_id' => ['required', 'integer'],
-                'total_price' => ['required', 'integer'],
-                'rating' => ['required', 'integer'],
-                'status' => ['required', 'string'],                
+                'product_id'=>['required','integer'],
+                'quantity' =>['required','string'],
+                'price'=>['required','string']
             ]);
             Log::info('User id ' . $userId . ' passed validator correctly.');
 
@@ -38,15 +38,21 @@ class SaleController extends Controller
             };
             $user_id = $request->input('user_id');
             $total_price = $request->input('total_price');
-            $rating = $request->input('rating');
-            $status = $request->input('status');
             
             $sale = new Sale();
             $sale->user_id = $user_id;
-            $sale->total_price = $total_price;
-            $sale->rating = $rating;
-            $sale->status = $status;            
+            $sale->rating->default(10);
+            $sale->status->default("pagado");            
             $sale->save();
+
+            $product_sale = new Product_Sale();
+
+
+
+
+
+
+
             Log::info('User id '.$userId.' purchased a total of '.$total_price.' € correctly.');
 
             return response()->json(
