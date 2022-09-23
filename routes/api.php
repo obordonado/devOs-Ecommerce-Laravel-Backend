@@ -65,6 +65,20 @@ Route::group(['middleware' =>'jwt.auth'], function(){
 });
 
 
+// ROUTES FOR PRODUCT_SALE 
+Route::get('/messagesbychannelid/{id}', [MessageController::class, 'getMessagesByChannelId']);
+
+Route::group(['middleware' => 'jwt.auth'], function(){
+    Route::post('/createmessage',[MessageController::class, 'createNewMessage']);
+    Route::post('/getownmessages', [MessageController::class, 'getOwnMessages']);
+    Route::get('/getmsgbymsgid/{id}',[MessageController::class, 'getMessageByMsgId']);
+    Route::put('/updatemessage/{id}', [MessageController::class, 'updateMessageByMsgId']);
+
+});
+
+
+
+
 
 // ROUTES FOR MESSAGES 
 Route::get('/messagesbychannelid/{id}', [MessageController::class, 'getMessagesByChannelId']);
