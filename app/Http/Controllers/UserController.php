@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Models\Sale;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -150,6 +152,46 @@ class UserController extends Controller
                     'message' => 'Page not found.'
                 ],
                 404
+            );
+        }
+    }
+
+    public function getSalesByStatus(Request $request)
+    {
+        try {            
+            Log::info('Getting sales by status...');
+
+            $status = $request->input('status');
+            $status = Sale::query()->where('status','=',$status)->get()->toArray();
+
+            if(!$status) {
+                Log::info('Status does not exist.');
+                return response()->json(
+                    [
+                        'success' => false,
+                        'message' => 'Chosen status does not exist.'
+                    ],
+                    400
+                );
+            }
+            Log::info('Sales were retrieved by status correctly.');
+            return response()->json(
+                [    
+                    'success' => true,
+                    'message' => 'Products were retrieved by status correctly.',
+                    'data' => $status
+                ],
+                200
+        );
+        } catch (\Exception $exception) {
+            Log::info('Error getting products by status. '. $exception->getMessage());
+
+            return response()->json(
+                [                
+                    'success' => false,
+                    'message' => 'Failed to get sales by status.'
+                ],
+                400
             );
         }
     }

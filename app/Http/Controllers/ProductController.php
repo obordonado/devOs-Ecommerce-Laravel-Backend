@@ -308,8 +308,7 @@ class ProductController extends Controller
     }
     
     public function deleteProductById($id)
-    {
-        
+    {        
         try {
             $userId = auth()->user()->id;
 

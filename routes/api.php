@@ -7,6 +7,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +36,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 Route::group(['middleware' => ['jwt.auth', 'isSuperAdmin']], function () {
     Route::post('/user/addsuperadmin/{id}', [UserController::class, 'addSuperAdminRoleToUser']);
     Route::post('/user/removesuperadmin/{id}', [UserController::class, 'removeSuperAdminRoleFromUser']);  
-    Route::get('/user/getallusersbyadmin/{id}',[UserController::class, 'getRoleUserByAdmin']);//Gets all users that are not admin or superadmin when $id=1.
+    Route::get('/user/getallusersbyadmin/{id}',[UserController::class, 'getRoleUserByAdmin']);//Gets all users that are not admin or superadmin.
     Route::get('/user/getallsalesbyadmin', [SaleController::class, 'getAllSalesBySuperAdmin']);
     Route::delete('/user/deleteuserby/{id}', [UserController::class, 'delUserById']);
     Route::post('/user/createproduct', [ProductController::class, 'createProduct']);
@@ -44,6 +45,7 @@ Route::group(['middleware' => ['jwt.auth', 'isSuperAdmin']], function () {
     // Route::delete('/deletepurchasebyid{id}', [SaleController::class, 'deletePurchaseById']); Not active due to the nature of the product. (No refunds allowed). Kept for scalability.
     Route::get('/user/getsalesbyuserid/{id}', [SaleController::class, 'getSaleByUserId']);
     Route::get('/user/getsalebyid/{id}',[SaleController::class, 'getSaleById']);
+    Route::get('/user/getsalesbystatus', [UserController::class, 'getSalesByStatus']);
 });
 
 
@@ -60,7 +62,6 @@ Route::group(['middleware' =>'jwt.auth'], function(){
     Route::post('/createpurchase', [SaleController::class, 'createPurchase']);
     Route::get('/getownpurchases', [SaleController::class, 'getOwnPurchases']);
     Route::get('/getownpurchasesbyid/{id}', [SaleController::class, 'getOwnPurchasesById']);
-
 });
 
 

@@ -248,7 +248,6 @@ class SaleController extends Controller
             );        
         }
     }
-
     public function getSaleById(Request $request, $id)
     {
         try {
