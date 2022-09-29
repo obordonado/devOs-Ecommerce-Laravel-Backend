@@ -9,18 +9,24 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+    protected $fillable = 
+    [
+        'user_id',
+        'brand',
         'name',
         'img_url',
-        'price',        
+        'price'
     ];
     
     public function users()
     {
         return $this->belongsTo(User::class);
     }
+
     public function products()
     {
-        return $this->belongsTo(Sale::class);
+        return $this->belongsToMany(Sale::class)
+        ->withPivot('quantity','price')
+        ->withTimestamps();
     }
 }

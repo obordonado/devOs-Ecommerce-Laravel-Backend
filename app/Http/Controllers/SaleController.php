@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\Product_sale;
+use App\Models\Product_sales;
 use App\Models\Sale;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\Console\Input\Input;
 
 class SaleController extends Controller
 {
@@ -20,9 +25,9 @@ class SaleController extends Controller
             $validator = Validator::make($request->all(),
             [
                 'user_id' => ['required', 'integer'],
-                'product_id'=>['required','integer'],
-                'quantity' =>['required','string'],
-                'price'=>['required','string']
+                'total_price' => ['required', 'integer'],
+                'rating' => ['required', 'integer'],
+                'status' => ['required', 'string'],                
             ]);
             Log::info('User id ' . $userId . ' passed validator correctly.');
 
@@ -38,21 +43,15 @@ class SaleController extends Controller
             };
             $user_id = $request->input('user_id');
             $total_price = $request->input('total_price');
+            $rating = $request->input('rating');
+            $status = $request->input('status');
             
             $sale = new Sale();
             $sale->user_id = $user_id;
-            $sale->rating->default(10);
-            $sale->status->default("pagado");            
+            $sale->total_price = $total_price;
+            $sale->rating = $rating;
+            $sale->status = $status;            
             $sale->save();
-
-            $product_sale = new Product_Sale();
-
-
-
-
-
-
-
             Log::info('User id '.$userId.' purchased a total of '.$total_price.' € correctly.');
 
             return response()->json(
@@ -75,7 +74,6 @@ class SaleController extends Controller
             );
         }
     }
-
     public function getOwnPurchases() 
     {
         try {

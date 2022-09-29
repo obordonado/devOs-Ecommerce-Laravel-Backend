@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->integer('total_price');
-            $table->integer('rating');
-            $table->string('status');            
+            $table->integer('total_price')->nullable();
+            $table->integer('rating')->nullable();
+            $table->string('status')->nullable();            
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

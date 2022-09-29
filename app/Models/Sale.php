@@ -13,17 +13,19 @@ class Sale extends Model
     [
         'user_id',
         'total_price',
-        'rating',        
-        'status',
+        'rating',
+        'status'
     ];
-
+    
     public function users()
     {
         return $this->belongsTo(User::class);
     }
+
     public function sales()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsToMany(Product::class)
+        ->withPivot('quantity','price')
+        ->withTimestamps();
     }
-
 }
