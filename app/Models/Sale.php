@@ -24,8 +24,6 @@ class Sale extends Model
 
     public function sales()
     {
-        return $this->belongsToMany(Product::class)
-        ->withPivot('quantity','price')
-        ->withTimestamps();
+        return $this->hasMany(ProductSale::class);
     }
 }

@@ -25,8 +25,6 @@ class Product extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Sale::class)
-        ->withPivot('quantity','price')
-        ->withTimestamps();
+        return $this->hasMany(ProductSale::class);
     }
 }
