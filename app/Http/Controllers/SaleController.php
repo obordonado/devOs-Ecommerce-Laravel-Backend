@@ -18,24 +18,6 @@ class SaleController extends Controller
             $userId = auth()->user()->id;
             Log::info('User id ' . $userId . ' is purchasing a product..');
 
-            $validator = Validator::make($request->all(),
-            [
-                'total_price' => ['required', 'integer'],
-                'rating' => ['required', 'integer'],
-                'status' => ['required', 'string'],                
-            ]);
-            Log::info('User id ' . $userId . ' passed validator correctly.');
-
-            if ($validator->fails()) {
-
-                return response()->json(
-                    [
-                        "success" => false,
-                        "message" => 'Error purchasing product. ' . $validator->errors()
-                    ],
-                    400
-                );
-            };
             $total_price = $request->input('total_price');
             $rating = $request->input('rating');
             $status = $request->input('status');
@@ -57,12 +39,12 @@ class SaleController extends Controller
             );
         } catch (\Exception $exception) {
 
-            Log::info('Error creating new product '.$exception->getMessage());
+            Log::info('Error creating new sale '.$exception->getMessage());
 
             return response()->json(
                 [
                     'success' => false,
-                    'message' => 'Error creating product.'
+                    'message' => 'Error creating sale.'
                 ],
                 400
             );

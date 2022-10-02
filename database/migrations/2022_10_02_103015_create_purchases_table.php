@@ -21,8 +21,7 @@ return new class extends Migration
                 $table->integer('quantity')->nullable();
                 $table->float('price')->nullable();
                 $table->timestamps();
-                $table->unique(['sale_id','product_id']);
-    
+                    
                 $table->foreign('sale_id')->references('id')->on('sales')->onDelete('cascade');
                 $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
