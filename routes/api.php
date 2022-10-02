@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductSaleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Models\ProductSale;
+use App\Models\Purchase;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -70,10 +71,10 @@ Route::group(['middleware' =>'jwt.auth'], function()
 });
 
 
-// ROUTES FOR PRODUCT_SALE 
+// ROUTES FOR PURCHASES
 Route::group(['middleware' => 'jwt.auth'], function()
 {
-    Route::post('/createproductsale', [ProductSaleController::class, 'createProductSale']);
+    Route::post('/createpurchase', [Purchase::class, 'createPurchase']);
 });
 
 

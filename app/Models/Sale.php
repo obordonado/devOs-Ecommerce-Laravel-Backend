@@ -22,7 +22,7 @@ class Sale extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function sales()
+    public function purchases()
     {
         return $this->hasMany(Purchase::class);
     }

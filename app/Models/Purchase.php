@@ -17,7 +17,7 @@ class Purchase extends Model
         'price'
     ];
 
-    public function users()
+    public function product()
     {
         return $this->belongsTo(Product::class);
     }
