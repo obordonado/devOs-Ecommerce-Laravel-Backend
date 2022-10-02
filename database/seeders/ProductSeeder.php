@@ -32,7 +32,7 @@ class ProductSeeder extends Seeder
                 'brand' => 'Special Creams',
                 'name' => 'Strawberry',
                 'img_url' => 'https://assets.unileversolutions.com/recipes-v2/231124.jpg?imwidth=800',
-                'price' => 3.50,
+                'price' => 3.70,
             ]
         );
 
@@ -43,7 +43,7 @@ class ProductSeeder extends Seeder
                 'brand' => 'Special Creams',
                 'name' => 'Vanilla',
                 'img_url' => 'https://recetinas.com/wp-content/uploads/2018/08/helado-de-vainilla.jpg',
-                'price' => 3.50,
+                'price' => 3.10,
             ]
         );
 
@@ -53,7 +53,7 @@ class ProductSeeder extends Seeder
                 'brand' => 'Sorted Creams',
                 'name' => 'Fruit',
                 'img_url' => 'http://www.recetario-cocina.com/archivosbd/helados-caseros-de-frutas.jpg',
-                'price' => 3.50,
+                'price' => 3.60,
             ]
         );
 

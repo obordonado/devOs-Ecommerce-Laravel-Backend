@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('brand');
             $table->string('name');
             $table->string('img_url');
-            $table->integer('price');
+            $table->float('price');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

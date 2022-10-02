@@ -5,8 +5,10 @@ use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductSaleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
+use App\Models\ProductSale;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,13 +29,15 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::group(['middleware' => 'jwt.auth'], function () {
+Route::group(['middleware' => 'jwt.auth'], function ()
+{
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);    
     Route::put('/edit/{id}',[AuthController::class, 'editOwnProfile']);
 });
 
-Route::group(['middleware' => ['jwt.auth', 'isSuperAdmin']], function () {
+Route::group(['middleware' => ['jwt.auth', 'isSuperAdmin']], function ()
+{
     Route::post('/user/addsuperadmin/{id}', [UserController::class, 'addSuperAdminRoleToUser']);
     Route::post('/user/removesuperadmin/{id}', [UserController::class, 'removeSuperAdminRoleFromUser']);  
     Route::get('/user/getallusersbyadmin/{id}',[UserController::class, 'getRoleUserByAdmin']);//Gets all users that are not admin or superadmin.
@@ -58,7 +62,8 @@ Route::get('/getproductbyid/{id}', [ProductController::class, 'getProductById'])
 
 
 // ROUTES FOR SALES
-Route::group(['middleware' =>'jwt.auth'], function(){
+Route::group(['middleware' =>'jwt.auth'], function()
+{
     Route::post('/createpurchase', [SaleController::class, 'createPurchase']);
     Route::get('/getownpurchases', [SaleController::class, 'getOwnPurchases']);
     Route::get('/getownpurchasesbyid/{id}', [SaleController::class, 'getOwnPurchasesById']);
@@ -66,14 +71,9 @@ Route::group(['middleware' =>'jwt.auth'], function(){
 
 
 // ROUTES FOR PRODUCT_SALE 
-Route::get('/messagesbychannelid/{id}', [MessageController::class, 'getMessagesByChannelId']);
-
-Route::group(['middleware' => 'jwt.auth'], function(){
-    Route::post('/createmessage',[MessageController::class, 'createNewMessage']);
-    Route::post('/getownmessages', [MessageController::class, 'getOwnMessages']);
-    Route::get('/getmsgbymsgid/{id}',[MessageController::class, 'getMessageByMsgId']);
-    Route::put('/updatemessage/{id}', [MessageController::class, 'updateMessageByMsgId']);
-
+Route::group(['middleware' => 'jwt.auth'], function()
+{
+    Route::post('/createproductsale', [ProductSaleController::class, 'createProductSale']);
 });
 
 

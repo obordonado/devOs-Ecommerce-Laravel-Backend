@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->integer('total_price')->nullable();
+            $table->float('total_price')->nullable();
             $table->integer('rating')->nullable();
             $table->string('status')->nullable();            
             $table->timestamps();
