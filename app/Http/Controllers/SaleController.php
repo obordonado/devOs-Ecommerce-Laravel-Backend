@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class SaleController extends Controller
 {
-    public function createPurchase(Request $request)
+    public function createSale(Request $request)
     {
         try {
             $userId = auth()->user()->id;
@@ -69,7 +69,7 @@ class SaleController extends Controller
         }
     }
 
-    public function getOwnPurchases() 
+    public function getOwnSales() 
     {
         try {
             $userId = auth()->user()->id;
@@ -96,7 +96,7 @@ class SaleController extends Controller
         }
     }
 
-    public function getOwnPurchasesById($id)
+    public function getOwnSalesById($id)
     {
         try {        
             $userId = auth()->user()->id;   

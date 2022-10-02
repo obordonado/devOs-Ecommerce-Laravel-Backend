@@ -9,7 +9,6 @@ use App\Http\Controllers\ProductSaleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Models\ProductSale;
-use App\Models\Purchase;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -65,16 +64,16 @@ Route::get('/getproductbyid/{id}', [ProductController::class, 'getProductById'])
 // ROUTES FOR SALES
 Route::group(['middleware' =>'jwt.auth'], function()
 {
-    Route::post('/createpurchase', [SaleController::class, 'createPurchase']);
-    Route::get('/getownpurchases', [SaleController::class, 'getOwnPurchases']);
-    Route::get('/getownpurchasesbyid/{id}', [SaleController::class, 'getOwnPurchasesById']);
+    Route::post('/createsale', [SaleController::class, 'createSale']);
+    Route::get('/getownsales', [SaleController::class, 'getOwnSales']);
+    Route::get('/getownsalesbyid/{id}', [SaleController::class, 'getOwnSalesById']);
 });
 
 
-// ROUTES FOR PURCHASES
+// ROUTES FOR PURCHASES // 
 Route::group(['middleware' => 'jwt.auth'], function()
 {
-    Route::post('/createpurchase', [Purchase::class, 'createPurchase']);
+    Route::post('/createproductsale', [ProductSaleController::class, 'createProductSale']);
 });
 
 
