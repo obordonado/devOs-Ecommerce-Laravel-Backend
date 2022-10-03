@@ -77,18 +77,3 @@ Route::group(['middleware' => 'jwt.auth'], function()
 {
     Route::post('/createpurchase', [PurchaseController::class, 'createPurchase']);
 });
-
-
-
-
-
-// ROUTES FOR MESSAGES 
-Route::get('/messagesbychannelid/{id}', [MessageController::class, 'getMessagesByChannelId']);
-
-Route::group(['middleware' => 'jwt.auth'], function(){
-    Route::post('/createmessage',[MessageController::class, 'createNewMessage']);
-    Route::post('/getownmessages', [MessageController::class, 'getOwnMessages']);
-    Route::get('/getmsgbymsgid/{id}',[MessageController::class, 'getMessageByMsgId']);
-    Route::put('/updatemessage/{id}', [MessageController::class, 'updateMessageByMsgId']);
-
-});

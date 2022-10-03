@@ -38,54 +38,119 @@ class PurchaseController extends Controller
                     400
                 );
             };
-            /// crea id en sales para evitar error restraint.
-            $sale = new Sale();
-            $sale->user_id = $userId;     
-            $sale->save();
 
-            /// coge y ordena valores de id en sales
-            $sale_id = DB::table('sales')
-            ->orderByDesc('updated_at')
-            ->latest()
-            ->get('id')
-            ->first();           
+            /// crea id en sales si no existe para evitar error restraint.//////////////////////////////////////
 
-            /// Devuelve el valor del último id generado en tabla sales.
-            $valor = $sale_id->id;
-            Log::info('usuario genera nuevo id '.$sale_id->id.' en sales ');
+            if (DB::table('sales')->where('user_id', 1)->doesntExist()) 
+            {
+                $sale = new Sale();
+                $sale->user_id = $userId;     
+                $sale->save();
 
-            /// Devuelve el valor del id del usuario que hace la compra.
-            $user = DB::table('sales')
-            ->where('user_id','=', $userId)
-            ->get()
-            ->first();
-            Log::info('usuario que hace la compra '.$user->id);
 
-            if($valor && $user){
+                /// coge y ordena valores de id en sales
+                $sale_id = DB::table('sales')
+                ->orderByDesc('updated_at')
+                ->latest()
+                ->get('id')
+                ->first();           
 
-                $valor = $valor-$valor+1;
-            };
-           
-            $product_id = $request->input('product_id');
-            $quantity = $request->input('quantity');
-            $price = $request->input('price');
-    
-            $purchase = new Purchase();
-            $purchase->sale_id = $valor;
-            $purchase->product_id = $product_id;
-            $purchase->quantity = $quantity;
-            $purchase->price = $price;
-            $purchase->save();
+                /// Devuelve el valor del último id generado en tabla sales.
+                $valor = $sale_id->id;
+                Log::info('usuario genera nuevo id '.$sale_id->id.' en sales ');
 
-            $sum = DB::table('purchases')
-            ->where('sale_id','=', $valor)
-            ->sum('price');
-            Log::info('log de $sum '.$sum);
+                /// Devuelve el valor del id del usuario que hace la compra.
+                $user = DB::table('sales')
+                ->where('user_id','=', $userId)
+                ->get()
+                ->first();
+                Log::info('usuario que hace la compra '.$user->id);
 
-            $total_price = DB::table('sales')
-            ->where('id', '=', $sale_id->id)->latest()
-            ->where('user_id','=',$userId)
-            ->update(['total_price'=> $sum ]);
+                if($valor ){
+
+                    $valor = $valor-$valor+1;
+                };
+            
+                $product_id = $request->input('product_id');
+                $quantity = $request->input('quantity');
+                $price = $request->input('price');
+        
+                $purchase = new Purchase();
+                $purchase->sale_id = $valor;
+                $purchase->product_id = $product_id;
+                $purchase->quantity = $quantity;
+                $purchase->price = $price;
+                $purchase->save();
+
+                $sum = DB::table('purchases')
+                ->where('sale_id','=', $valor)
+                ->sum('price');
+                Log::info('log de $sum '.$sum);
+
+                // insert total price in last sales id with last userId.
+                $total_price = DB::table('sales')
+                ->where('id', '=', $sale_id->id)->latest()
+                ->where('user_id','=',$userId)
+                ->update(['total_price'=> $sum ]);
+            }
+            else{
+
+                if (DB::table('sales')->where('user_id', 1)->exists()) 
+                {
+
+                /// coge y ordena valores de id en sales
+                $sale_id = DB::table('sales')
+                ->orderByDesc('updated_at')
+                ->latest()
+                ->get('id')
+                ->first();           
+
+                /// Devuelve el valor del último id generado en tabla sales.
+                $valor = $sale_id->id;
+                Log::info('usuario genera nuevo id '.$sale_id->id.' en sales ');
+
+                /// Devuelve el valor del id del usuario que hace la compra.
+                $user = DB::table('sales')
+                ->where('user_id','=', $userId)
+                ->get()
+                ->first();
+                Log::info('usuario que hace la compra '.$user->id);
+
+                if($valor ){
+
+                    $valor = $valor-$valor+1;
+                };
+            
+                $product_id = $request->input('product_id');
+                $quantity = $request->input('quantity');
+                $price = $request->input('price');
+        
+                $purchase = new Purchase();
+                $purchase->sale_id = $valor;
+                $purchase->product_id = $product_id;
+                $purchase->quantity = $quantity;
+                $purchase->price = $price;
+                $purchase->save();
+
+                $sum = DB::table('purchases')
+                ->where('sale_id','=', $valor)
+                ->sum('price');
+                Log::info('log de $sum '.$sum);
+
+                // insert total price in last sales id with last userId.
+                $total_price = DB::table('sales')
+                ->where('id', '=', $sale_id->id)->latest()
+                ->where('user_id','=',$userId)
+                ->update(['total_price'=> $sum ]);
+            }
+        }
+
+
+
+
+
+
+
 
 
 
