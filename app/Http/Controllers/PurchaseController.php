@@ -38,19 +38,17 @@ class PurchaseController extends Controller
                     400
                 );
             };
-            /// crea id en sales para que no de error  restraint
+            /// crea id en sales para evitar error restraint.
             $sale = new Sale();
             $sale->user_id = $userId;     
             $sale->save();
-
 
             /// coge y ordena valores de id en sales
             $sale_id = DB::table('sales')
             ->orderByDesc('updated_at')
             ->latest()
             ->get('id')
-            ->first();
-           
+            ->first();           
 
             /// Devuelve el valor del último id generado en tabla sales.
             $valor = $sale_id->id;
@@ -62,7 +60,6 @@ class PurchaseController extends Controller
             ->get()
             ->first();
             Log::info('usuario que hace la compra '.$user->id);
-
 
             if($valor && $user){
 
@@ -86,16 +83,34 @@ class PurchaseController extends Controller
             Log::info('log de $sum '.$sum);
 
             $total_price = DB::table('sales')
-            ->where('id', '=', $valor)->latest()
+            ->where('id', '=', $sale_id->id)->latest()
             ->where('user_id','=',$userId)
-            ->insertGetId(array
-            (               
-                'user_id' => $userId,
-                'total_price' => $sum,
-                "created_at" => \Carbon\Carbon::now(), # new \Datetime()
-                "updated_at" => \Carbon\Carbon::now(),  # new \Datetime()
-            )                
-            );
+            ->update(['total_price'=> $sum ]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             Log::info('User id '.$userId.' created a purchase correctly.');
