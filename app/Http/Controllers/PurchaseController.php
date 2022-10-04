@@ -58,7 +58,26 @@ class PurchaseController extends Controller
 
         /// Devuelve el valor del último id generado en tabla sales.
         $valor = $sale_id->id;
-        Log::info('usuario (doesntExist) genera nuevo id ' . $sale_id->id . ' en sales ');
+        Log::info('usuario '.$userId.' (doesntExist) genera nuevo id en sales ' . $sale_id->id . ' en sales ');
+
+
+
+
+
+
+
+        if ($valor == 1) { //cambiado a /2 y de posicion sobre justo inferior
+            
+          $valor = $valor;      
+        
+        }else if($valor / 2 == 0){
+
+          $valor = $valor+1;
+        
+        };
+
+
+
 
         /// Devuelve el valor del id del usuario que hace la compra.
         $user = DB::table('sales')
@@ -67,10 +86,7 @@ class PurchaseController extends Controller
           ->first();
         Log::info('usuario que hace la compra ' . $user->id);
 
-        if ($valor) {
 
-          $valor = $valor - $valor + 1;
-        };
 
         $product_id = $request->input('product_id');
         $quantity = $request->input('quantity');
@@ -78,7 +94,7 @@ class PurchaseController extends Controller
 
         Log::info('valor de id antes de hacer new purchase '.$userId);
         $purchase = new Purchase();
-        $purchase->user_id = $userId;////ESTA ES LA ULTIMA LINEA AÑADIDA ANTES DE HACER LA MIGRACION DE PURCHASES CON ID USUARIO Y CORRECCION EN MODELO USER Y PURCHASES UNO A MUCHOS
+        $purchase->user_id = $userId;    
         $purchase->sale_id = $valor;
         $purchase->product_id = $product_id;
         $purchase->quantity = $quantity;
@@ -87,7 +103,7 @@ class PurchaseController extends Controller
 
         $sum = DB::table('purchases')
           ->where('sale_id', '=', $valor)
-          ->where('user_id','=',$userId)   ////ESTA ES LA ULTIMA LINEA AÑADIDA ANTES DE HACER LA MIGRACION DE PURCHASES CON ID USUARIO Y CORRECCION EN MODELO USER Y PURCHASES UNO A MUCHOS
+          ->where('user_id','=',$userId)  
           ->sum('price');
         Log::info('log de $sum ' . $sum);
 
@@ -95,9 +111,7 @@ class PurchaseController extends Controller
         $total_price = DB::table('sales')
         ->where('user_id', '=', $userId)
         ->where('id', '=', $sale_id->id)->latest()
-/////////////////////////////////////////////////////////////////////
-
-          ->update(['total_price' => $sum]);
+        ->update(['total_price' => $sum]);
 
       } else {
 
@@ -112,7 +126,19 @@ class PurchaseController extends Controller
 
           /// Devuelve el valor del último id generado en tabla sales.
           $valor = $sale_id->id;
-          Log::info('usuario (exists) genera nuevo id ' . $sale_id->id . ' en sales ');
+          Log::info('usuario '.$userId.' (exists) genera nuevo id en sales ' . $sale_id->id . ' en sales ');
+
+
+          if ($valor == 1) { //cambiado a /2 y de posicion sobre justo inferior
+            
+            $valor = $valor;      
+          
+          }else if($valor / 2 == 0){
+  
+            $valor = $valor+1;
+          
+          };
+
 
           /// Devuelve el valor del id del usuario que hace la compra.
           $user = DB::table('sales')
@@ -121,10 +147,6 @@ class PurchaseController extends Controller
             ->first();
           Log::info('usuario que hace la compra ' . $user->id);
 
-          if ($valor) {
-
-            $valor = $valor - $valor + 1;
-          };
 
           $product_id = $request->input('product_id');
           $quantity = $request->input('quantity');
@@ -140,6 +162,7 @@ class PurchaseController extends Controller
 
           $sum = DB::table('purchases')
             ->where('sale_id', '=', $valor)
+            ->where('user_id','=',$userId)
             ->sum('price');
           Log::info('log de $sum ' . $sum);
 
