@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->float('total_price')->nullable();
             $table->integer('rating')->nullable();
-            $table->string('status')->nullable();            
+            $table->string('status')->nullable()->default('in progress');            
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
