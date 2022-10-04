@@ -12,138 +12,144 @@ use Spatie\FlareClient\Time\Time;
 
 class PurchaseController extends Controller
 {
-    public function createPurchase(Request $request)
-    {
-        try {            
+  public function createPurchase(Request $request)
+  {
+    try {
 
-            $userId = auth()->user()->id;
-            Log::info('User '.$userId.' trying to create purchase...');
-    
-            $validator = Validator::make($request->all(),
-            [
-                // 'sale_id' => ['required', 'integer'],
-                'product_id' => ['required', 'integer'],
-                'quantity' => ['required', 'string'],
-                'price' => ['required','string']
-            ]);
-            Log::info('User id ' . $userId . ' passed validator correctly.');
-    
-            if ($validator->fails()) {
-    
-                return response()->json(
-                    [
-                        "success" => false,
-                        "message" => 'Error purchasing product. ' . $validator->errors()
-                    ],
-                    400
-                );
-            };
+      $userId = auth()->user()->id;
 
-            /// crea id en sales si no existe para evitar error restraint.//////////////////////////////////////
+      Log::info('User ' . $userId . ' trying to create purchase...');
 
-            if (DB::table('sales')->where('user_id', 1)->doesntExist()) 
-            {
-                $sale = new Sale();
-                $sale->user_id = $userId;     
-                $sale->save();
+      $validator = Validator::make(
+        $request->all(),
+        [
+          // 'sale_id' => ['required', 'integer'],
+          'product_id' => ['required', 'integer'],
+          'quantity' => ['required', 'string'],
+          'price' => ['required', 'string']
+        ]
+      );
+      Log::info('User id ' . $userId . ' passed validator correctly.');
 
+      if ($validator->fails()) {
 
-                /// coge y ordena valores de id en sales
-                $sale_id = DB::table('sales')
-                ->orderByDesc('updated_at')
-                ->latest()
-                ->get('id')
-                ->first();           
+        return response()->json(
+          [
+            "success" => false,
+            "message" => 'Error purchasing product. ' . $validator->errors()
+          ],
+          400
+        );
+      };
 
-                /// Devuelve el valor del último id generado en tabla sales.
-                $valor = $sale_id->id;
-                Log::info('usuario genera nuevo id '.$sale_id->id.' en sales ');
+      /// crea id en sales si no existe para evitar error restraint.//////////////////////////////////////
 
-                /// Devuelve el valor del id del usuario que hace la compra.
-                $user = DB::table('sales')
-                ->where('user_id','=', $userId)
-                ->get()
-                ->first();
-                Log::info('usuario que hace la compra '.$user->id);
+      if (DB::table('sales')->where('user_id', $userId)->doesntExist()) {
+        $sale = new Sale();
+        $sale->user_id = $userId;
+        $sale->save();
 
-                if($valor ){
+        /// coge y ordena valores de id en sales
+        $sale_id = DB::table('sales')
+          ->orderByDesc('updated_at')
+          ->latest()
+          ->get('id')
+          ->first();
 
-                    $valor = $valor-$valor+1;
-                };
-            
-                $product_id = $request->input('product_id');
-                $quantity = $request->input('quantity');
-                $price = $request->input('price');
-        
-                $purchase = new Purchase();
-                $purchase->sale_id = $valor;
-                $purchase->product_id = $product_id;
-                $purchase->quantity = $quantity;
-                $purchase->price = $price;
-                $purchase->save();
+        /// Devuelve el valor del último id generado en tabla sales.
+        $valor = $sale_id->id;
+        Log::info('usuario (doesntExist) genera nuevo id ' . $sale_id->id . ' en sales ');
 
-                $sum = DB::table('purchases')
-                ->where('sale_id','=', $valor)
-                ->sum('price');
-                Log::info('log de $sum '.$sum);
+        /// Devuelve el valor del id del usuario que hace la compra.
+        $user = DB::table('sales')
+          ->where('user_id', '=', $userId)
+          ->get()
+          ->first();
+        Log::info('usuario que hace la compra ' . $user->id);
 
-                // insert total price in last sales id with last userId.
-                $total_price = DB::table('sales')
-                ->where('id', '=', $sale_id->id)->latest()
-                ->where('user_id','=',$userId)
-                ->update(['total_price'=> $sum ]);
-            }
-            else{
+        if ($valor) {
 
-                if (DB::table('sales')->where('user_id', 1)->exists()) 
-                {
+          $valor = $valor - $valor + 1;
+        };
 
-                /// coge y ordena valores de id en sales
-                $sale_id = DB::table('sales')
-                ->orderByDesc('updated_at')
-                ->latest()
-                ->get('id')
-                ->first();           
+        $product_id = $request->input('product_id');
+        $quantity = $request->input('quantity');
+        $price = $request->input('price');
 
-                /// Devuelve el valor del último id generado en tabla sales.
-                $valor = $sale_id->id;
-                Log::info('usuario genera nuevo id '.$sale_id->id.' en sales ');
+        Log::info('valor de id antes de hacer new purchase '.$userId);
+        $purchase = new Purchase();
+        $purchase->user_id = $userId;////ESTA ES LA ULTIMA LINEA AÑADIDA ANTES DE HACER LA MIGRACION DE PURCHASES CON ID USUARIO Y CORRECCION EN MODELO USER Y PURCHASES UNO A MUCHOS
+        $purchase->sale_id = $valor;
+        $purchase->product_id = $product_id;
+        $purchase->quantity = $quantity;
+        $purchase->price = $price;
+        $purchase->save();
 
-                /// Devuelve el valor del id del usuario que hace la compra.
-                $user = DB::table('sales')
-                ->where('user_id','=', $userId)
-                ->get()
-                ->first();
-                Log::info('usuario que hace la compra '.$user->id);
+        $sum = DB::table('purchases')
+          ->where('sale_id', '=', $valor)
+          ->where('user_id','=',$userId)   ////ESTA ES LA ULTIMA LINEA AÑADIDA ANTES DE HACER LA MIGRACION DE PURCHASES CON ID USUARIO Y CORRECCION EN MODELO USER Y PURCHASES UNO A MUCHOS
+          ->sum('price');
+        Log::info('log de $sum ' . $sum);
 
-                if($valor ){
+        // insert total price in last sales id with last userId.
+        $total_price = DB::table('sales')
+        ->where('user_id', '=', $userId)
+        ->where('id', '=', $sale_id->id)->latest()
+/////////////////////////////////////////////////////////////////////
 
-                    $valor = $valor-$valor+1;
-                };
-            
-                $product_id = $request->input('product_id');
-                $quantity = $request->input('quantity');
-                $price = $request->input('price');
-        
-                $purchase = new Purchase();
-                $purchase->sale_id = $valor;
-                $purchase->product_id = $product_id;
-                $purchase->quantity = $quantity;
-                $purchase->price = $price;
-                $purchase->save();
+          ->update(['total_price' => $sum]);
 
-                $sum = DB::table('purchases')
-                ->where('sale_id','=', $valor)
-                ->sum('price');
-                Log::info('log de $sum '.$sum);
+      } else {
 
-                // insert total price in last sales id with last userId.
-                $total_price = DB::table('sales')
-                ->where('id', '=', $sale_id->id)->latest()
-                ->where('user_id','=',$userId)
-                ->update(['total_price'=> $sum ]);
-            }
+        if (DB::table('sales')->where('user_id', $userId)->exists()) {
+
+          /// coge y ordena valores de id en sales
+          $sale_id = DB::table('sales')
+            ->orderByDesc('updated_at')
+            ->latest()
+            ->get('id')
+            ->first();
+
+          /// Devuelve el valor del último id generado en tabla sales.
+          $valor = $sale_id->id;
+          Log::info('usuario (exists) genera nuevo id ' . $sale_id->id . ' en sales ');
+
+          /// Devuelve el valor del id del usuario que hace la compra.
+          $user = DB::table('sales')
+            ->where('user_id', '=', $userId)
+            ->get()
+            ->first();
+          Log::info('usuario que hace la compra ' . $user->id);
+
+          if ($valor) {
+
+            $valor = $valor - $valor + 1;
+          };
+
+          $product_id = $request->input('product_id');
+          $quantity = $request->input('quantity');
+          $price = $request->input('price');
+
+          $purchase = new Purchase();
+          $purchase->user_id = $userId;
+          $purchase->sale_id = $valor;
+          $purchase->product_id = $product_id;
+          $purchase->quantity = $quantity;
+          $purchase->price = $price;
+          $purchase->save();
+
+          $sum = DB::table('purchases')
+            ->where('sale_id', '=', $valor)
+            ->sum('price');
+          Log::info('log de $sum ' . $sum);
+
+          // insert total price in last sales id with last userId.
+          $total_price = DB::table('sales')
+            ->where('id', '=', $sale_id->id)->latest()
+            ->where('user_id', '=', $userId)
+            ->update(['total_price' => $sum]);
         }
+      }
 
 
 
@@ -163,42 +169,24 @@ class PurchaseController extends Controller
 
 
 
+      Log::info('User id ' . $userId . ' created a purchase correctly.');
+      return response()->json(
+        [
+          "success" => true,
+          "message" => 'User id ' . $userId . ' created purchase correctly.'
+        ],
+        200
+      );
+    } catch (\Exception $exception) {
+      Log::info('Error creating new purchase ' . $exception->getMessage());
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            Log::info('User id '.$userId.' created a purchase correctly.');
-            return response()->json(
-                [
-                    "success" => true,
-                    "message" => 'User id '.$userId.' created purchase correctly.'
-                ],
-                200
-            );
-
-
-        } catch (\Exception $exception) {
-            Log::info('Error creating new purchase '.$exception->getMessage());
-
-            return response()->json(
-                [
-                    'success' => false,
-                    'message' => 'Error creating purchase by user id '.$userId
-                ],
-                400
-            );
-        }
+      return response()->json(
+        [
+          'success' => false,
+          'message' => 'Error creating purchase by user id ' . $userId
+        ],
+        400
+      );
     }
+  }
 }
-

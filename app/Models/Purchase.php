@@ -11,6 +11,7 @@ class Purchase extends Model
 
     protected $fillable =
     [
+        'user_id',
         'sale_id',
         'product_id',
         'quantity',
@@ -25,5 +26,10 @@ class Purchase extends Model
     public function sales()
     {
         return $this->belongsTo(Sale::class);
+    }
+
+    public function purchases()
+    {
+        return $this->belongsTo(User::class);
     }
 }
