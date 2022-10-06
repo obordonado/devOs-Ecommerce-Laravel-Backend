@@ -89,10 +89,6 @@ class PurchaseController extends Controller
         ->get('id')
         ->first();
         }
-
-
-        
-        /////////// CREO QUE ESTA PARTE DEL CODIGO SE PUEDE BORRAR TRAS PROBAR QUE TODO VAYA BIEN /////
         elseif($find_status)
         {
           Log::info('Getting  "new id of in progress"...');
@@ -105,7 +101,6 @@ class PurchaseController extends Controller
           ->get('id')
           ->first();
         };
-        /////////// CREO QUE ESTA PARTE DEL CODIGO SE PUEDE BORRAR TRAS PROBAR QUE TODO VAYA BIEN /////
 
 
 
