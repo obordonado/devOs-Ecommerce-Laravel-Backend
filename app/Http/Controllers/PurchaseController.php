@@ -77,8 +77,22 @@ class PurchaseController extends Controller
         $sale->user_id = $userId;
         $sale->status = 'in progress';
         $sale->save();
+
+
+        Log::info('Getting  "new id of in progress"...'); ////// ULTIMO 19:40  METO ESTE BLOQUE ENTERO 
+        // Getting last sale id with status in progress.
+        $sale_id = DB::table('sales')
+        ->where('user_id', '=', $userId)
+        ->where('status', '=', 'in progress')
+        ->orderByDesc('updated_at')
+        ->latest()
+        ->get('id')
+        ->first();
         }
 
+
+        
+        /////////// CREO QUE ESTA PARTE DEL CODIGO SE PUEDE BORRAR TRAS PROBAR QUE TODO VAYA BIEN /////
         elseif($find_status)
         {
           Log::info('Getting  "new id of in progress"...');
@@ -91,6 +105,11 @@ class PurchaseController extends Controller
           ->get('id')
           ->first();
         };
+        /////////// CREO QUE ESTA PARTE DEL CODIGO SE PUEDE BORRAR TRAS PROBAR QUE TODO VAYA BIEN /////
+
+
+
+
         
         // Returns last id value in sales table.
         $valor = $sale_id->id;
