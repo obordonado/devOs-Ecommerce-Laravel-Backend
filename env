@@ -9,11 +9,11 @@ LOG_DEPRECATIONS_CHANNEL=null
 LOG_LEVEL=debug
 
 DB_CONNECTION=mysql
-DB_HOST=eu-cdbr-west-03.cleardb.net
+DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=heroku_ffc60eaba7e4df2
-DB_USERNAME=b7a67b1c8c587b
-DB_PASSWORD=eb82d8d5
+DB_DATABASE=devos-ecommerce-laravel-backend
+DB_USERNAME=root
+DB_PASSWORD=Kastana-100.
 
 JWT_SECRET=HojsdseIQoXfBtrj1UrweQPIyBnuEWaoMc0ErdX84v8mU3WzGg1eCFL8aCX3svwQ
 REDIRECT_HTTPS = true
