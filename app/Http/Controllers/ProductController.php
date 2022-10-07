@@ -290,7 +290,7 @@ class ProductController extends Controller
             return response()->json(
                 [
                     'success' => true,
-                    'message' => 'Message ' . $id . ' updated correctly.'
+                    'message' => 'Product ' . $id . ' updated correctly.'
                 ],
                 200
                 );
@@ -334,7 +334,7 @@ class ProductController extends Controller
             return response()->json(
                 [
                     'success' => true,
-                    'message' => 'Message '.$id.' deleted correctly.',
+                    'message' => 'Product '.$id.' deleted correctly.',
 
                 ],
                 200

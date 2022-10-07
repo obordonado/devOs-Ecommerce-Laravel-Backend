@@ -12,45 +12,6 @@ use Illuminate\Support\Facades\Validator;
 
 class SaleController extends Controller
 {
-    public function createSale(Request $request)
-    {
-        try {
-            $userId = auth()->user()->id;
-            Log::info('User id ' . $userId . ' is purchasing a product..');
-
-            $total_price = $request->input('total_price');
-            $rating = $request->input('rating');
-            $status = $request->input('status');
-            
-            $sale = new Sale();
-            $sale->user_id = $userId;
-            $sale->total_price = $total_price;
-            $sale->rating = $rating;
-            $sale->status = $status;            
-            $sale->save();
-            Log::info('User id '.$userId.' purchased a total of '.$total_price.' € correctly.');
-
-            return response()->json(
-                [
-                    'success' => true,
-                    'message' => 'User id '.$userId.' purchased a total of '.$total_price.'€ correctly.'
-                ],
-                201
-            );
-        } catch (\Exception $exception) {
-
-            Log::info('Error creating new sale '.$exception->getMessage());
-
-            return response()->json(
-                [
-                    'success' => false,
-                    'message' => 'Error creating sale.'
-                ],
-                400
-            );
-        }
-    }
-
     public function getOwnSales() 
     {
         try {
@@ -153,6 +114,7 @@ class SaleController extends Controller
             );        
         }
     }
+
     public function getAllSalesBySuperAdmin()
     {
         try {
@@ -229,6 +191,7 @@ class SaleController extends Controller
             );        
         }
     }
+    
     public function getSaleById(Request $request, $id)
     {
         try {
@@ -265,8 +228,6 @@ class SaleController extends Controller
                 404
             );        
         }
-    }
-
-    
+    }    
 }
 

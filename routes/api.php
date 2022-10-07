@@ -7,7 +7,9 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductSaleController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
 use App\Models\ProductSale;
 use App\Models\Purchase;
@@ -52,6 +54,8 @@ Route::group(['middleware' => ['jwt.auth', 'isSuperAdmin']], function ()
     Route::get('/user/getsalesbyuserid/{id}', [SaleController::class, 'getSaleByUserId']);
     Route::get('/user/getsalebyid/{id}',[SaleController::class, 'getSaleById']);
     Route::get('/user/getsalesbystatus', [UserController::class, 'getSalesByStatus']);
+    Route::put('/user/editstatus/{id}',[StatusController::class, 'editStatusById']);
+
 });
 
 
@@ -66,14 +70,20 @@ Route::get('/getproductbyid/{id}', [ProductController::class, 'getProductById'])
 // ROUTES FOR SALES
 Route::group(['middleware' =>'jwt.auth'], function()
 {
-    Route::post('/createsale', [SaleController::class, 'createSale']);
     Route::get('/getownsales', [SaleController::class, 'getOwnSales']);
     Route::get('/getownsalesbyid/{id}', [SaleController::class, 'getOwnSalesById']);
 });
 
 
-// ROUTES FOR PURCHASES // 
+// ROUTES FOR PURCHASES 
 Route::group(['middleware' => 'jwt.auth'], function()
 {
     Route::post('/createpurchase', [PurchaseController::class, 'createPurchase']);
+});
+
+// ROUTE FOR RATING
+
+Route::group(['middleware' => 'jwt.auth'], function ()
+{
+    Route::put('/ratesale/{id}',[RatingController::class, 'rateSale']);///<--------------PENDIENTE
 });
