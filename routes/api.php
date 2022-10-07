@@ -28,7 +28,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 // ROUTES FOR USERS 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -40,6 +39,7 @@ Route::group(['middleware' => 'jwt.auth'], function ()
     Route::put('/edit/{id}',[AuthController::class, 'editOwnProfile']);
 });
 
+// ROUTES FOR ADMIN
 Route::group(['middleware' => ['jwt.auth', 'isSuperAdmin']], function ()
 {
     Route::post('/user/addsuperadmin/{id}', [UserController::class, 'addSuperAdminRoleToUser']);
@@ -55,16 +55,13 @@ Route::group(['middleware' => ['jwt.auth', 'isSuperAdmin']], function ()
     Route::get('/user/getsalebyid/{id}',[SaleController::class, 'getSaleById']);
     Route::get('/user/getsalesbystatus', [UserController::class, 'getSalesByStatus']);
     Route::put('/user/editstatus/{id}',[StatusController::class, 'editStatusById']);
-
 });
-
 
 // ROUTES FOR PRODUCTS
 Route::get('/getallproducts', [ProductController::class, 'getAllProducts']);
 Route::get('/getproductsbybrand', [ProductController::class, 'getProductsByBrand']);
 Route::get('/getproductsbyname', [ProductController::class, 'getProductsByName']);
 Route::get('/getproductbyid/{id}', [ProductController::class, 'getProductById']);
-
 
 
 // ROUTES FOR SALES
@@ -74,7 +71,6 @@ Route::group(['middleware' =>'jwt.auth'], function()
     Route::get('/getownsalesbyid/{id}', [SaleController::class, 'getOwnSalesById']);
 });
 
-
 // ROUTES FOR PURCHASES 
 Route::group(['middleware' => 'jwt.auth'], function()
 {
@@ -82,8 +78,7 @@ Route::group(['middleware' => 'jwt.auth'], function()
 });
 
 // ROUTE FOR RATING
-
 Route::group(['middleware' => 'jwt.auth'], function ()
 {
-    Route::put('/ratesale/{id}',[RatingController::class, 'rateSaleById']);///<--------------PENDIENTE
+    Route::put('/ratesale/{id}',[RatingController::class, 'rateSaleById']);
 });

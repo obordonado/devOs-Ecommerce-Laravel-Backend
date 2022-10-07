@@ -10,7 +10,7 @@
 <br>
 
 > Desde GeeksHubsAcademy se solicita la siguiente aplicación :
-# <center>Laravel LFG project APIREST</center>
+# <center>Laravel Backend E-commerce</center>
 
 <br>
 
