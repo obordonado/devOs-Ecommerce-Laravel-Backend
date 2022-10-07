@@ -85,5 +85,5 @@ Route::group(['middleware' => 'jwt.auth'], function()
 
 Route::group(['middleware' => 'jwt.auth'], function ()
 {
-    Route::put('/ratesale/{id}',[RatingController::class, 'rateSale']);///<--------------PENDIENTE
+    Route::put('/ratesale/{id}',[RatingController::class, 'rateSaleById']);///<--------------PENDIENTE
 });
