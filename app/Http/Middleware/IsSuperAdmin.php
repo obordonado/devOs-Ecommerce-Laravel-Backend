@@ -35,7 +35,7 @@ class IsSuperAdmin
             return response()->json(
                 [
                     'success' => false,
-                    'message' => 'Route does not exist.'
+                    'message' => 'Incorrect privileges.'
                 ],
                 404
             );
