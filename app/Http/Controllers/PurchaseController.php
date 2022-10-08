@@ -346,7 +346,7 @@ class PurchaseController extends Controller
       return response()->json(
         [
           'success' => false,
-          'message' => 'Error creating purchase by user id ' . $userId
+          'message' => 'Error creating purchase by user id ' . $userId . $exception->getMessage()
         ],
         400
       );

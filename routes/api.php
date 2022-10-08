@@ -63,7 +63,6 @@ Route::get('/getproductsbybrand', [ProductController::class, 'getProductsByBrand
 Route::get('/getproductsbyname', [ProductController::class, 'getProductsByName']);
 Route::get('/getproductbyid/{id}', [ProductController::class, 'getProductById']);
 
-
 // ROUTES FOR SALES
 Route::group(['middleware' =>'jwt.auth'], function()
 {
