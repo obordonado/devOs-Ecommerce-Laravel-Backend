@@ -13,7 +13,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
-    const ROLE_USER = 21;
+    const ROLE_USER = 1;
 
     public function register(Request $request)
     {

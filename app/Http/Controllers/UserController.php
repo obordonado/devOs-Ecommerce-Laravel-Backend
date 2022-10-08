@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    const ROLE_SUPER_ADMIN = 3;
+    const ROLE_SUPER_ADMIN = 21;
 
     public function addSuperAdminRoleToUser($id)
     {
