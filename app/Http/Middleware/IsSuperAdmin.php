@@ -17,7 +17,7 @@ class IsSuperAdmin
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
 
-    const ROLE_SUPER_ADMIN= 3;
+    const ROLE_SUPER_ADMIN= 21;
 
     public function handle(Request $request, Closure $next)
     {
