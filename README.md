@@ -47,6 +47,15 @@
 
 <center><img src="/public/img/Diagram.png" style="width:800px;"/></center>
 
+
+> Para mantener un orden y una secuencia correcta, se ha usado Trello
+
+<center><img src="/public/img/trello.png" style="width:400px;"/></center>
+
+<br>
+
+---
+
 > El proyecto se ha realizado en una rama adicional de trabajo, haciendo un merge cuando se ha comprobado una o varias funcionalidades.
 
 > Se ha utilizado JWT para la autenticación de los usuarios.
