@@ -9,7 +9,7 @@
 
 <br>
 
-> Desde GeeksHubsAcademy se solicita la siguiente aplicación :
+
 # <center>Laravel Backend E-commerce</center>
 
 <br>
@@ -26,8 +26,14 @@
 
 > ##### Los requisitos funcionales de la aplicación son los siguientes:
 <pre>
-> ● 
+> ● Registro de usuarios.
+> ● Login de usuarios + token + middleware.
+> ● Middleware para roles de usuarios.
+> ● CRUD de los diferentes modelos.
+> ● Al menos una relación Many to Many y otra One to Many.
+> ● Seeders para distintas tablas.
 </pre>
+
 
 ---
 
@@ -39,7 +45,7 @@
 
 > Para cumplir con los requisitos solicitados, se han creado las siguientes tablas y sus relaciones:
 
-<center><img src="/public/img/tablas-devos-ecommerce-laravel-backend.png" style="width:800px;"/></center>
+<center><img src="/public/img/Diagram.png" style="width:800px;"/></center>
 
 > El proyecto se ha realizado en una rama adicional de trabajo, haciendo un merge cuando se ha comprobado una o varias funcionalidades.
 
@@ -48,35 +54,37 @@
 > Existen distintos tipos de usuarios, siendo uno de ellos del tipo súper admin, que tiene acceso a ;
 * Conceder privilegios de admin o super admin a otros usuarios.
 * Quitar privilegios de admin o super admin a otros usuarios.
+* Recuperar todos los usuarios.
 * Eliminar usuarios.
-* Eliminar xxxx.
-* Eliminar xxxx.
+* Recuperar todas las ventas.
+* Crear productos.
+* Editar productos.
+* Eliminar productos.
+* Recuperar venta mediante id usuario.
+* Recuperar venta mediante id venta.
+* Recuperar venta mediante estado.
+* Editar estado de una venta.
 
-> Los usuarios sin privilegios de administrador podrán tener acceso a todo aquello relacionado con su cuenta de usuario.
 
-> Para acceder a los endpoints, cualquier usuario puede hacerlo mediante distintas aplicaciones.
-> En la aplicación se ha incluido un archivo JSON con los datos exportado de los endpoints para importarlos en Postman o Thunder client.
+> Los usuarios sin privilegios de administrador podrán tener acceso a todo aquello relacionado con su cuenta de usuario pudiendo:
 
-<pre>
-Ubicación del archivo para importar en Postman o Visual Studio Code con Thunder Client.
-<img src="/public/img/Postman-Thunder-json.png" style="width:200px;"/> 
+* Registrar nuevo usuario.
+* Hacer log in.
+* Hacer log out.
+* Recuperar información sobre su cuenta de usuario.
+* Editar información de su cuenta de usuario.
+* Realizar compras.
+* Valorar (Rating) de producto / servicio.
 
-Vista de Thunder Client en Visual Studio Code.
-<img src="/public/img/Thunder-client.png" style="width:200px;"/> 
-
-Vista de los distintos grupos creados para Thunder client.
-<img src="/public/img/Postman-user.png" style="width:155px;"/> 
+> Para acceder a los endpoints, cualquier usuario puede hacerlo mediante distintas aplicaciones como Postman o la extensión Thunder de Visual Studio Code.
 
 </pre>
 
->* Al importar el archivo, se tendrá acceso a todos los endpoints y se podrá hacer uso como titular de la aplicación. - SE RUEGA PRECAUCIÓN -
->* Las variables de entorno se encuentran en ".env.example".
+>* Si se desea ejecutar en local, se deberán modificar los datos de conexión del archivo .env y tener acceso a la base de datos en local.
 
->* Si se desea ejecutar en local, se deberán modificar los datos de conexión del archivo anterior y tener acceso a la base de datos en local.
+>* La aplicación se ha construido de manera que permite tener un registro de cada una de sus funciones ;
 
->* La aplicación se ha construido de manera que permite tener un registro (al que un usuario no puede tener acceso ) de cada una de sus funciones ;
-
-<img src="/public/img/Log-example.png" style="width:358px;"/>
+<img src="/public/img/log.png"/>
 
 >* Además, cada usuario recibirá información en caso de error o exito acerca de la función que haya ejecutado.
 
@@ -94,287 +102,62 @@ Vista de los distintos grupos creados para Thunder client.
  > Con esos comandos y configurando el archivo .env para trabajar en local, se podrá hacer uso de la aplicación haciendo las solicitudes en "http://localhost:8000/api/{ENDPOINT}"
  
 
+ > #### En las siguientes imagenes se presentan como muestra varios endpoints a los que se tiene acceso:
+
+<img src="/public/img/login.png" style="width:192px;"/> <img src="/public/img/logout.png" style="width:169px;"/> <img src="/public/img/me.png" style="width:192px;"/> <img src="/public/img/edit-own-profile.png" style="width:169px;"/> <img src="/public/img/ratint-edit.png" style="width:172px;"/> <img src="/public/img/add-superadmin.png" style="width:195px;"/> <img src="/public/img/remove-superadmin.png" style="width:195px;"/> <img src="/public/img/purchase.png" style="width:210px;"/>
  ---
 
-#### En adelante se muestran capturas de los distintos endpoints de la aplicación que se pueden agrandar al hacer click sobre su imagen, además de una breve descripción.
-<br>
+ > La dirección donde se ha desplegado (Heroku) es https://devos-ecommerce.herokuapp.com
 
-* #### USERS
+ > El usuario de la primera imágen es súper admin y con él se podrá utilizar cualquiera de los endpoints y todas sus funciones.
 
-<br><br>
+ > Al añadir las siguientes partes de ruta a la anterior se podrá tener acceso a toda la aplicación.
 
+##### ROUTES FOR USERS
+>* /register (POST)
+>* /login (POST)
+>* /me (GET)
+>* /edit/{id} (PUT)
+>* /logout (POST)
 
->* <b>Register User;</b>
-<img src="/public/img/Register-User.png" style="width:358px;"/>
+##### ROUTES FOR SUPER ADMIN
+>* /user/addsuperadmin/{id} (POST)
+>* /user/removesuperadmin/{id} (POST)
+>* /user/getallusersbyadmin/{id} (GET)
+>* /user/getallsalesbyadmin (GET)
+>* /user/deleteuserby/{id} (DELETE)
+>* /user/createproduct (POST)
+>* /user/editproduct/{id} (PUT)
+>* /user/deleteproduct/{id} (DELETE)
+>* /user/getsalesbyuserid/{id (GET)
+>* /user/getsalebyid/{id} (GET)
+>* /user/getsalesbystatus (GET)
+>* /user/editstatus/{id} (PUT)
 
-> Se deberán introduciŕ los datos que aparecen en la captura mediante json.
+##### ROUTES FOR PRODUCTS
+>* /getallproducts (GET)
+>* /getproductsbybrand (GET)
+>* /getproductsbyname (GET)
+>* /getproductbyid/{id} (GET)
 
-<br>
-<br>
+##### ROUTES FOR SALES
+>* /getownsales (GET)
+>* /getownsalesbyid/{id} (GET)
 
+##### ROUTES FOR PURCHASES
+>* /createpurchase (POST)
 
->* <b>User login;</b>
-<img src="/public/img/User-Login.png" style="width:358px;"/>
 
-> Se deberán introduciŕ los datos que aparecen en la captura mediante json.
+###### Al realizar una compra, en la tabla sales se obtiene el importe total de cada venta por usuario (un cliente compra varios productos con distintos precios), quedando además por defecto en estado de "in progress".
 
-<br><br>
+<pre>
+<img src="/public/img/purchases.png" style="width:220px;"/>     <img src="/public/img/sales.png" style="width:250px;"/>     <img src="/public/img/users.png" style="width:280px;"/>     <img src="/public/img/products.png" style="width:280px;"/>
 
+</pre>
 
+##### ROUTES FOR RATING
 
->* <b>User Profile;</b>
-<img src="/public/img/User-Profile.png" style="width:358px;"/>
-
-> Se deberá introduciŕ autenticación mediante token.
-
-<br><br>
-
-
-
->* <b>User edit own profile;</b>
-<img src="/public/img/Register-User.png" style="width:358px;"/>
-
-> Se deberán introduciŕ los datos que aparecen en la captura mediante json además de introduciŕ autenticación mediante token.
-
-<br><br>
-
-
-
->* <b>Add super admin to user;</b>
-<img src="/public/img/Add-sadmin-by-id.png" style="width:358px;"/>
-
-> El usuario ha de ser super admin e introducir autenticación mediante token y la id del usuario al que quiera dar privilegios en la url.
-
-<br><br>
-
-
-
->* <b>Remove super admin from user;</b>
-<img src="/public/img/Add-sadmin-by-id.png" style="width:358px;"/>
-
-> El usuario ha de ser super admin e introducir autenticación mediante token y la id del usuario al que quiera quietar privilegios en la url.
-
-<br><br>
-
-
-
->* <b>Logout user;</b>
-<img src="/public/img/Add-sadmin-by-id.png" style="width:358px;"/>
-
-> El usuario ha de introducir autenticación mediante token.
-
-<br><br>
-
-
-
->* <b>Get all users by role;</b>
-<img src="/public/img/Get-users-by-role-sadmin.png" style="width:358px;"/>
-
-> El usuario ha de ser super admin e introducir autenticación mediante token.
-
-<br><br>
-
-
-
->* <b>Delete user by id;</b>
-<img src="/public/img/Add-sadmin-by-id.png" style="width:358px;"/>
-
-> El usuario ha de ser super admin e introducir autenticación mediante token y la id del usuario al que quiera eliminar en la url.
-
-<br><br>
-
-
-
----
-
-* #### GAMES
-
-<br><br>
-
-
-
->* <b>Create game;</b>
-<img src="/public/img/Create-game.png" style="width:358px;"/>
-
-> El usuario ha de introducir autenticación mediante token y el título del juego.
-
-<br><br>
-
-
-
->* <b>Get all games;</b>
-<img src="/public/img/Get-all-games.png" style="width:358px;"/>
-
-> No es necesario estar registrado para ver los juegos disponibles.
-
-<br><br>
-
-
-
->* <b>Get game by id;</b>
-<img src="/public/img/Get-game-by-id.png" style="width:358px;"/>
-
-> El usuario ha de introducir autenticación mediante token y la id del juego en la url.
-
-<br><br>
-
-
-
->* <b>Get game by title;</b>
-<img src="/public/img/Get-game-by-title.png" style="width:358px;"/>
-
-> El usuario ha de introducir autenticación mediante token y el título del juego mediante json.
-
-<br><br>
-
-
-
->* <b>Get own games by user id;</b>
-<img src="/public/img/Get-own-games-by-user-id.png" style="width:358px;"/>
-
-> El usuario ha de introducir autenticación mediante token y la id del usuario en la url.
-
-<br><br>
-
-
-
->* <b>Update game title by id;</b>
-<img src="/public/img/Update-game-title-by-id.png" style="width:358px;"/>
-
-> El usuario ha de introducir autenticación mediante token, la id del juego en la url y el nuevo título mediante json.
-
-<br><br>
-
-
-
->* <b>Delete game by id;</b>
-<img src="/public/img/Get-own-games-by-user-id.png" style="width:358px;"/>
-
-> El usuario ha de introducir autenticación mediante token y la id del juego en la url.
-
----
-
-* #### CHANNELS
-
-<br><br>
-
-
-
->* <b>Create new channel;</b>
-<img src="/public/img/Create-new-channel.png" style="width:358px;"/>
-
-> El usuario ha de introducir autenticación mediante token, name y game id mediante json.
-
-<br><br>
-
-
-
->* <b>Get all channels;</b>
-<img src="/public/img/Create-new-channel.png" style="width:358px;"/>
-
-> No es necesario registro para acceder a los distintos canales.
-
-<br><br>
-
-
-
->* <b>Get channel by id</b>
-<img src="/public/img/Get-channel-by-id.png" style="width:358px;"/>
-
-> No es necesario registro para acceder a los distintos canales.
-
-<br><br>
-
-
-
->* <b>Get channel by name;</b>
-<img src="/public/img/Get-channel-by-name.png" style="width:358px;"/>
-
-> No es necesario registro para acceder a los distintos canales.
-
-<br><br>
-
-
-
->* <b>Join channel by id;</b>
-<img src="/public/img/Join-channel-by-id.png" style="width:358px;"/>
-
-> El usuario ha de introducir autenticación mediante token, y canal en url.
-
-<br><br>
-
-
-
->* <b>Exit channel by id;</b>
-<img src="/public/img/Exit-channel-by-id.png" style="width:358px;"/>
-
-> El usuario ha de introducir autenticación mediante token, y canal en url.
-
-<br><br>
-
-
-
->* <b>Delete channel by id (super admin);</b>
-<img src="/public/img/Delete-channel-by-id.png" style="width:358px;"/>
-
-> El usuario ha de introducir autenticación mediante token, y canal en url.
-
-<br><br>
-
-
----
-
-#### MESSAGES
-
-<br><br>
-
-
-
->* <b>Create message;</b>
-<img src="/public/img/Create-message.png" style="width:358px;"/>
-
-> El usuario ha de introducir autenticación mediante token, channel id y mensaje.
-
-<br><br>
-
-
-
->* <b>Get own messages;</b>
-<img src="/public/img/Get-own-messages.png" style="width:358px;"/>
-
-> El usuario ha de introducir autenticación mediante token.
-
-<br><br>
-
-
-
->* <b>Get messages by message id;</b>
-<img src="/public/img/Get-messages-by-id.png" style="width:358px;"/>
-
-> El usuario ha de introducir autenticación mediante token, y el id en url.
-
-<br><br>
-
->* <b>Get messages by channel id;</b>
-<img src="/public/img/get-messages-by-channel-id.png" style="width:358px;"/>
-
-> No es necesaria autenticación mediante token, y se debe poner el id del canal en la url.
-
-<br><br>
-
-
->* <b>Update message by id;</b>
-<img src="/public/img/Update-message-by-id.png" style="width:358px;"/>
-
-> El usuario ha de introducir autenticación mediante token, channel id, mensaje y el id en url.
-
-<br><br>
-
-
->* <b>Delete message by id (super admin);</b>
-<img src="/public/img/Update-message-by-id.png" style="width:358px;"/>
-
-> El usuario ha de introducir autenticación mediante token y el id en url.
+>* /ratesale/{id} (PUT)
 
 ---
 
