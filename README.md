@@ -113,7 +113,7 @@
 
  > #### En las siguientes imagenes se presentan como muestra varios endpoints a los que se tiene acceso:
 
-<img src="/public/img/login.png" style="width:192px;"/> <img src="/public/img/logout.png" style="width:169px;"/> <img src="/public/img/me.png" style="width:192px;"/> <img src="/public/img/edit-own-profile.png" style="width:169px;"/> <img src="/public/img/ratint-edit.png" style="width:172px;"/> <img src="/public/img/add-superadmin.png" style="width:195px;"/> <img src="/public/img/remove-superadmin.png" style="width:195px;"/> <img src="/public/img/purchase.png" style="width:210px;"/>
+<img src="/public/img/login.png" style="width:192px;"/> <img src="/public/img/logout.png" style="width:169px;"/> <img src="/public/img/me.png" style="width:192px;"/> <img src="/public/img/edit-own-profile.png" style="width:178px;"/> <img src="/public/img/ratint-edit.png" style="width:172px;"/> <img src="/public/img/add-superadmin.png" style="width:195px;"/> <img src="/public/img/remove-superadmin.png" style="width:195px;"/> <img src="/public/img/purchase.png" style="width:210px;"/>
  ---
 
  > La dirección donde se ha desplegado (Heroku) es https://devos-ecommerce.herokuapp.com
