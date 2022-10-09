@@ -97,18 +97,19 @@
 
 >* Además, cada usuario recibirá información en caso de error o exito acerca de la función que haya ejecutado.
 
->* La aplicación cuenta con distintos seeds para ser probada sin tener que rellenar datos desde Workbench. (RoleSeeder por ejemplo.)
+>* La aplicación cuenta con distintos seeders para ser probada sin tener que rellenar datos desde Workbench.
 
 <br>
  
  > Para poder hacer uso de la aplicación es necesario clonarla o descargar el archivo zip.
 
- > Tras clonar o usar el .zip, es necesario ejecutar los siguientes comandos desde el terminal:
+ > Tras clonar o usar el .zip, y configurar / crear el archivo .env, es necesario ejecutar los siguientes comandos desde el terminal:
  >* composer install
  >* php artisan db:migrate
  >* php artisan db:seed
+ >* php artisan serve
 
- > Con esos comandos y configurando el archivo .env para trabajar en local, se podrá hacer uso de la aplicación haciendo las solicitudes en "http://localhost:8000/api/{ENDPOINT}"
+ > Con esos comandos y para trabajar en local, se podrá hacer uso de la aplicación haciendo las solicitudes en "http://localhost:8000/api/{ENDPOINT}"
  
 
  > #### En las siguientes imagenes se presentan como muestra varios endpoints a los que se tiene acceso:
@@ -118,7 +119,7 @@
 
  > La dirección donde se ha desplegado (Heroku) es https://devos-ecommerce.herokuapp.com
 
- > El usuario de la primera imágen es súper admin y con él se podrá utilizar cualquiera de los endpoints y todas sus funciones.
+ > El usuario email oscar@oscar.com  y password 123456 es súper admin y con él se podrá utilizar cualquiera de los endpoints y todas sus funciones.
 
  > Al añadir las siguientes partes de ruta a la anterior se podrá tener acceso a toda la aplicación.
 
@@ -170,6 +171,8 @@
 
 ---
 
->* Aquí concluye la aplicación y sus posibilidades de momento, pues iré corrigiendo pequeños errores de código o mejoras del mismo para ir ampliándola.
+>* Aquí concluye la aplicación y sus posibilidades, de momento.
+>* Las mejoras pasarán por añadir seguimiento del estado en el que se encuentra compra para el usuario y la posibilidad de dejar una reseña tras la compra de algún producto o, darse de baja del servicio previa solicitud por escrito.
 
->* <b>Por último, indicar que todo feedback es bienvenido !!</b>
+
+>* <b>Por último, indicar que todo feedback es bienvenido.</b>
