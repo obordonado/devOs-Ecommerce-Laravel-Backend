@@ -117,7 +117,7 @@
 <img src="/public/img/login.png" style="width:192px;"/> <img src="/public/img/logout.png" style="width:169px;"/> <img src="/public/img/me.png" style="width:192px;"/> <img src="/public/img/edit-own-profile.png" style="width:178px;"/> <img src="/public/img/ratint-edit.png" style="width:172px;"/> <img src="/public/img/add-superadmin.png" style="width:195px;"/> <img src="/public/img/remove-superadmin.png" style="width:195px;"/> <img src="/public/img/purchase.png" style="width:210px;"/>
  ---
 
- > La dirección donde se ha desplegado (Heroku) es https://devos-ecommerce.herokuapp.com
+ > La dirección donde se ha desplegado (Heroku) es https://devos-ecommerce.herokuapp.com/api
 
  > El usuario email oscar@oscar.com  y password 123456 es súper admin y con él se podrá utilizar cualquiera de los endpoints y todas sus funciones.
 
